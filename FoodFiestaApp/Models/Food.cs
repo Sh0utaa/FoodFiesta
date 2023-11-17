@@ -8,6 +8,6 @@
 
         public ICollection<Cart> Cart { get; set; }
         public ICollection<History> History { get; set; }
-        public ICollection<Ingredient> Ingredients { get; set; }
+        public ICollection<FoodIngredient> FoodIngredientTable { get; set; }
     }
 }

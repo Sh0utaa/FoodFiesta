@@ -5,7 +5,7 @@ namespace FoodFiestaApp.Models
     public class Comment
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
         public string? Text { get; set; }
         public DateTime Datetime { get; set; }
 
