@@ -19,7 +19,7 @@ namespace FoodFiestaApp.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(Food))]
+        [ProducesResponseType(200, Type = typeof(FoodDto))]
         public IActionResult GetFood()
         {
             var allFood =  _mapper.Map<List<FoodDto>>(_foodRepository.GetFood());
@@ -28,7 +28,7 @@ namespace FoodFiestaApp.Controllers
         }
 
         [HttpGet("{Id}")]
-        [ProducesResponseType(200, Type = typeof(Food))]
+        [ProducesResponseType(200, Type = typeof(FoodDto))]
         [ProducesResponseType(400)]
         public IActionResult GetFoodById(int Id)
         {

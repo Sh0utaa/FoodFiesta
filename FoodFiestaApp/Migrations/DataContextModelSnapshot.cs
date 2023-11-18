@@ -89,14 +89,14 @@ namespace FoodFiestaApp.Migrations
                         {
                             Id = 1,
                             CustomerId = "1",
-                            Datetime = new DateTime(2023, 11, 17, 11, 46, 6, 354, DateTimeKind.Local).AddTicks(4498),
+                            Datetime = new DateTime(2023, 11, 17, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3811),
                             Text = "Delicious pizza!"
                         },
                         new
                         {
                             Id = 2,
                             CustomerId = "2",
-                            Datetime = new DateTime(2023, 11, 16, 11, 46, 6, 354, DateTimeKind.Local).AddTicks(4542),
+                            Datetime = new DateTime(2023, 11, 16, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3838),
                             Text = "The hotdog was amazing!"
                         });
                 });
@@ -163,31 +163,31 @@ namespace FoodFiestaApp.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1fbbf4d3-958c-4455-9c1b-9a854e66183d",
+                            ConcurrencyStamp = "c285b5a3-127c-4169-be3f-c1f1f8be6623",
                             Email = "john.doe@example.com",
                             EmailConfirmed = false,
                             FirstName = "John",
                             LastName = "Doe",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "120aab98-9c22-4664-a827-e5ce822635b4",
+                            SecurityStamp = "02576d1a-c98a-4d06-a4b3-fb42ee926251",
                             TwoFactorEnabled = false,
-                            UserName = "john.doe@example.com"
+                            UserName = "JohnDoe_27"
                         },
                         new
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "933c216e-30ea-45b0-bf09-80cb8bdb4fec",
+                            ConcurrencyStamp = "101a1a6f-8b0b-461c-a690-c1fbe5176610",
                             Email = "jane.smith@example.com",
                             EmailConfirmed = false,
                             FirstName = "Jane",
                             LastName = "Smith",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "93848e31-cea2-4302-a5a7-5a957341fb18",
+                            SecurityStamp = "1f976cf9-6496-4acc-85a1-f641d318c92e",
                             TwoFactorEnabled = false,
-                            UserName = "jane.smith@example.com"
+                            UserName = "JaneSmith_07"
                         });
                 });
 
@@ -256,7 +256,7 @@ namespace FoodFiestaApp.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.ToTable("FoodIngredient");
+                    b.ToTable("FoodIngredients");
 
                     b.HasData(
                         new
@@ -358,14 +358,14 @@ namespace FoodFiestaApp.Migrations
                         {
                             CustomerId = "1",
                             FoodId = 1,
-                            Datetime = new DateTime(2023, 11, 13, 11, 46, 6, 354, DateTimeKind.Local).AddTicks(4675),
+                            Datetime = new DateTime(2023, 11, 13, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3968),
                             Id = 1
                         },
                         new
                         {
                             CustomerId = "2",
                             FoodId = 2,
-                            Datetime = new DateTime(2023, 11, 8, 11, 46, 6, 354, DateTimeKind.Local).AddTicks(4688),
+                            Datetime = new DateTime(2023, 11, 8, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3973),
                             Id = 2
                         });
                 });

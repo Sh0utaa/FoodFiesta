@@ -13,6 +13,7 @@ namespace FoodFiestaApp.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Food> Foods { get; set; }
+        public DbSet<FoodIngredient> FoodIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Cart> Cart { get; set; }
         public DbSet<History> History { get; set; }

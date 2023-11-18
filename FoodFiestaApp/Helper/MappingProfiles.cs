@@ -9,8 +9,12 @@ namespace FoodFiestaApp.Helper
         public MappingProfiles()
         {
             CreateMap<Customer, CustomerDto>();
-            CreateMap<Food, FoodDto>();
             CreateMap<Comment, CommentDto>();
+            CreateMap<Cart, CartDto>();
+            CreateMap<History, HistoryDto>();
+            CreateMap<Food, FoodDto>();
+            CreateMap<FoodIngredient, FoodIngredientDto>();
+            CreateMap<Ingredient, IngredientDto>();
         }
     }
 }
