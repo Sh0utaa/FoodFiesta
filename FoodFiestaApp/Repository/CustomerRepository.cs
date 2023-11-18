@@ -16,5 +16,21 @@ namespace FoodFiestaApp.Repository
         {
             return _context.Customers.OrderBy(p => p.Id).ToList();
         }
+        public Customer GetCustomer(string id)
+        {
+            var singleCustomer = _context.Customers.Where(p => p.Id == id).FirstOrDefault();
+            return singleCustomer;
+        }
+
+        public bool CustomerExists(string id)
+        {
+            var customerExists = _context.Customers.Any(p => p.Id == id);
+            return customerExists;
+        }
+
+        public void CreateCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+        }
     }
 }

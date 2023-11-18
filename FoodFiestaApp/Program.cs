@@ -1,3 +1,4 @@
+using AutoMapper;
 using FoodFiestaApp.Data;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Repository;
@@ -8,7 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

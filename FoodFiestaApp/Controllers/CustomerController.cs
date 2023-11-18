@@ -1,4 +1,6 @@
-﻿using FoodFiestaApp.Interfaces;
+﻿using AutoMapper;
+using FoodFiestaApp.DTO;
+using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,20 +11,38 @@ namespace FoodFiestaApp.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerRepository _customerRepository;
-        public CustomerController(ICustomerRepository customerRepository)
+        private readonly IMapper _mapper;
+        public CustomerController(ICustomerRepository customerRepository, IMapper mapper)
         {
             _customerRepository = customerRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Customer>))]
         public IActionResult GetCustomers()
         {
-            var allCustomers = _customerRepository.GetCustomers();
+            var allCustomers = _mapper.Map<List<CustomerDto>>(_customerRepository.GetCustomers());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(allCustomers);
+        }
+
+        [HttpGet("{Id}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Customer>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetCustomer(string Id)
+        {
+            if (_customerRepository.GetCustomer(Id) is null)
+                return NotFound();
+
+            var customer = _mapper.Map<CustomerDto>(_customerRepository.GetCustomer(Id));
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(customer);
         }
     }
 }
