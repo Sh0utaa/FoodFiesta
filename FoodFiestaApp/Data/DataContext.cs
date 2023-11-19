@@ -1,4 +1,5 @@
-﻿using FoodFiestaApp.Models;
+﻿using FoodFiestaApp.DTO;
+using FoodFiestaApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodFiestaApp.Data
@@ -10,68 +11,78 @@ namespace FoodFiestaApp.Data
             
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Cart> Carts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<FoodIngredient> FoodIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<Cart> Cart { get; set; }
-        public DbSet<History> History { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            SeedData(modelBuilder);
-
-            // Configure one-to-many relationship between Customer and Comment
-            modelBuilder.Entity<Customer>()
-                .HasMany(c => c.Comments)
-                .WithOne(c => c.Customer)
-                .HasForeignKey(c => c.CustomerId);
-
-            // Configure many-to-many relationship between Customer and Food through History
-            modelBuilder.Entity<History>()
-                .HasKey(h => new { h.CustomerId, h.FoodId });
-
-            modelBuilder.Entity<History>()
-                .HasOne(h => h.Customer)
-                .WithMany(c => c.History)
-                .HasForeignKey(h => h.CustomerId);
-
-            modelBuilder.Entity<History>()
-                .HasOne(h => h.Food)
-                .WithMany(f => f.History)
-                .HasForeignKey(h => h.FoodId);
-
-            // Configure many-to-many relationship between Customer and Food through Cart
+            // Configure relationships and keys
             modelBuilder.Entity<Cart>()
-                .HasKey(c => new { c.CustomerId, c.FoodId });
+                .HasKey(c => c.Id);
 
-            modelBuilder.Entity<Cart>()
+            modelBuilder.Entity<Comment>()
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Customer)
-                .WithMany(cu => cu.Cart)
+                .WithMany(cust => cust.Comments)
                 .HasForeignKey(c => c.CustomerId);
 
-            modelBuilder.Entity<Cart>()
-                .HasOne(c => c.Food)
-                .WithMany(f => f.Cart)
-                .HasForeignKey(c => c.FoodId);
+            modelBuilder.Entity<Customer>()
+                .HasKey(cust => cust.Id);
 
-            // Configure many-to-many relationship between Food and Ingredient through FoodIngredientTable
-            modelBuilder.Entity<FoodIngredient>()
-                .HasKey(f => new { f.FoodId, f.IngredientId });
+            modelBuilder.Entity<Customer>()
+                .HasMany(cust => cust.Comments)
+                .WithOne(comment => comment.Customer)
+                .HasForeignKey(comment => comment.CustomerId);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(cust => cust.Cart)
+                .WithOne(cart => cart.Customer)
+                .HasForeignKey(cart => cart.CustomerId);
+
+            modelBuilder.Entity<Food>()
+                .HasKey(food => food.Id);
+
+            modelBuilder.Entity<Food>()
+                .HasMany(food => food.Cart)
+                .WithOne(cart => cart.Food)
+                .HasForeignKey(cart => cart.FoodId);
+
+            modelBuilder.Entity<Food>()
+                .HasMany(food => food.FoodIngredientTable)
+                .WithOne(foodIngredient => foodIngredient.Food)
+                .HasForeignKey(foodIngredient => foodIngredient.FoodId);
 
             modelBuilder.Entity<FoodIngredient>()
-                .HasOne(f => f.Food)
-                .WithMany(fu => fu.FoodIngredientTable)
-                .HasForeignKey(f => f.FoodId);
+                .HasKey(foodIngredient => foodIngredient.Id);
 
             modelBuilder.Entity<FoodIngredient>()
-                .HasOne(f => f.Ingredient)
-                .WithMany(fu => fu.FoodIngredientTable)
-                .HasForeignKey(f => f.IngredientId);
+                .HasOne(foodIngredient => foodIngredient.Food)
+                .WithMany(food => food.FoodIngredientTable)
+                .HasForeignKey(foodIngredient => foodIngredient.FoodId);
+
+            modelBuilder.Entity<FoodIngredient>()
+                .HasOne(foodIngredient => foodIngredient.Ingredient)
+                .WithMany(ingredient => ingredient.FoodIngredientTable)
+                .HasForeignKey(foodIngredient => foodIngredient.IngredientId);
+
+            modelBuilder.Entity<Ingredient>()
+                .HasKey(ingredient => ingredient.Id);
+
+            modelBuilder.Entity<Ingredient>()
+                .HasMany(ingredient => ingredient.FoodIngredientTable)
+                .WithOne(foodIngredient => foodIngredient.Ingredient)
+                .HasForeignKey(foodIngredient => foodIngredient.IngredientId);
         }
+
+
         private void SeedData(ModelBuilder modelBuilder)
         {
             // Seed customers
@@ -105,22 +116,13 @@ namespace FoodFiestaApp.Data
 
             modelBuilder.Entity<Cart>().HasData(carts);
 
-            // Seed history
-            var history = new List<History>
-            {
-                new History { Id = 1, CustomerId = "1", FoodId = 1, Datetime = DateTime.Now.AddDays(-5) },
-                new History { Id = 2, CustomerId = "2", FoodId = 2, Datetime = DateTime.Now.AddDays(-10) },
-                // Add more history entries as needed
-            };
-
-            modelBuilder.Entity<History>().HasData(history);
             // Seed foods
             var foods = new List<Food>
             {
-                new Food { Id = 1, FoodName = "Pizza", FoodImgUrl = "pizza.jpg" },
-                new Food { Id = 2, FoodName = "HotDog", FoodImgUrl = "HotDog.jpg" },
-                new Food { Id = 3, FoodName = "Burger", FoodImgUrl = "burger.jpg" },
-                new Food { Id = 4, FoodName = "Pasta", FoodImgUrl = "pasta.jpg" },
+                new Food { Id = 1, FoodName = "Pizza", FoodImgUrl = "pizza.jpg", Price = 30},
+                new Food { Id = 2, FoodName = "HotDog", FoodImgUrl = "HotDog.jpg", Price = 1.5},
+                new Food { Id = 3, FoodName = "Burger", FoodImgUrl = "burger.jpg", Price = 10},
+                new Food { Id = 4, FoodName = "Pasta", FoodImgUrl = "pasta.jpg" , Price = 6},
                 // Add more foods as needed
             };
 

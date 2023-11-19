@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using FoodFiestaApp.DTO;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FoodFiestaApp.Models
 {

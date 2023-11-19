@@ -13,7 +13,6 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.AddScoped<IHistoryRepository, HistoryRepository>();
 builder.Services.AddScoped<IFoodRepository, FoodRepository>();
 builder.Services.AddScoped<IFoodIngredientRepository, FoodIngredientRepository>();
 builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();

@@ -1,4 +1,5 @@
-﻿using FoodFiestaApp.Models;
+﻿using FoodFiestaApp.DTO;
+using FoodFiestaApp.Models;
 
 namespace FoodFiestaApp.Interfaces
 {

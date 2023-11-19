@@ -19,7 +19,7 @@ namespace FoodFiestaApp.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Customer>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<CustomerDto>))]
         public IActionResult GetCustomers()
         {
             var allCustomers = _mapper.Map<List<CustomerDto>>(_customerRepository.GetCustomers());
@@ -30,7 +30,7 @@ namespace FoodFiestaApp.Controllers
         }
 
         [HttpGet("{Id}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Customer>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<CustomerDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetCustomer(string Id)
         {

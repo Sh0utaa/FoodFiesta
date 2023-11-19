@@ -11,7 +11,6 @@ namespace FoodFiestaApp.Helper
             CreateMap<Customer, CustomerDto>();
             CreateMap<Comment, CommentDto>();
             CreateMap<Cart, CartDto>();
-            CreateMap<History, HistoryDto>();
             CreateMap<Food, FoodDto>();
             CreateMap<FoodIngredient, FoodIngredientDto>();
             CreateMap<Ingredient, IngredientDto>();

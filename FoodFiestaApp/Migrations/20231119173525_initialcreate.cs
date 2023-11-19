@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodFiestaApp.Migrations
 {
-    public partial class ModelsAndSeeding : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,6 +37,21 @@ namespace FoodFiestaApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Foods",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FoodName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: true),
+                    FoodImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Foods", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
@@ -57,6 +72,7 @@ namespace FoodFiestaApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rating = table.Column<double>(type: "float", nullable: true),
                     Datetime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -68,26 +84,6 @@ namespace FoodFiestaApp.Migrations
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Foods",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FoodName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FoodImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Foods", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Foods_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -140,50 +136,24 @@ namespace FoodFiestaApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "History",
-                columns: table => new
-                {
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FoodId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Datetime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_History", x => new { x.CustomerId, x.FoodId });
-                    table.ForeignKey(
-                        name: "FK_History_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_History_Foods_FoodId",
-                        column: x => x.FoodId,
-                        principalTable: "Foods",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "c285b5a3-127c-4169-be3f-c1f1f8be6623", "john.doe@example.com", false, "John", "Doe", false, null, null, null, null, null, false, "02576d1a-c98a-4d06-a4b3-fb42ee926251", false, "JohnDoe_27" },
-                    { "2", 0, "101a1a6f-8b0b-461c-a690-c1fbe5176610", "jane.smith@example.com", false, "Jane", "Smith", false, null, null, null, null, null, false, "1f976cf9-6496-4acc-85a1-f641d318c92e", false, "JaneSmith_07" }
+                    { "1", 0, "322e2a0a-8856-4355-b1f9-700f7070ddb5", "john.doe@example.com", false, "John", "Doe", false, null, null, null, null, null, false, "1aeddb60-02e6-4f3c-b11f-76efe0251877", false, "JohnDoe_27" },
+                    { "2", 0, "722ab4e5-937b-446f-bbdf-ff8aa421b8c4", "jane.smith@example.com", false, "Jane", "Smith", false, null, null, null, null, null, false, "2698f581-6358-412b-b39c-3b6e60d1b142", false, "JaneSmith_07" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Foods",
-                columns: new[] { "Id", "CustomerId", "FoodImgUrl", "FoodName" },
+                columns: new[] { "Id", "FoodImgUrl", "FoodName", "Price" },
                 values: new object[,]
                 {
-                    { 1, null, "pizza.jpg", "Pizza" },
-                    { 2, null, "HotDog.jpg", "HotDog" },
-                    { 3, null, "burger.jpg", "Burger" },
-                    { 4, null, "pasta.jpg", "Pasta" }
+                    { 1, "pizza.jpg", "Pizza", 30.0 },
+                    { 2, "HotDog.jpg", "HotDog", 1.5 },
+                    { 3, "burger.jpg", "Burger", 10.0 },
+                    { 4, "pasta.jpg", "Pasta", 6.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -213,11 +183,11 @@ namespace FoodFiestaApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "Comments",
-                columns: new[] { "Id", "CustomerId", "Datetime", "Text" },
+                columns: new[] { "Id", "CustomerId", "Datetime", "Rating", "Text" },
                 values: new object[,]
                 {
-                    { 1, "1", new DateTime(2023, 11, 17, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3811), "Delicious pizza!" },
-                    { 2, "2", new DateTime(2023, 11, 16, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3838), "The hotdog was amazing!" }
+                    { 1, "1", new DateTime(2023, 11, 18, 21, 35, 24, 669, DateTimeKind.Local).AddTicks(6033), null, "Delicious pizza!" },
+                    { 2, "2", new DateTime(2023, 11, 17, 21, 35, 24, 669, DateTimeKind.Local).AddTicks(6062), null, "The hotdog was amazing!" }
                 });
 
             migrationBuilder.InsertData(
@@ -239,15 +209,6 @@ namespace FoodFiestaApp.Migrations
                     { 4, 7, 12 }
                 });
 
-            migrationBuilder.InsertData(
-                table: "History",
-                columns: new[] { "CustomerId", "FoodId", "Datetime", "Id" },
-                values: new object[,]
-                {
-                    { "1", 1, new DateTime(2023, 11, 13, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3968), 1 },
-                    { "2", 2, new DateTime(2023, 11, 8, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3973), 2 }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Cart_FoodId",
                 table: "Cart",
@@ -262,16 +223,6 @@ namespace FoodFiestaApp.Migrations
                 name: "IX_FoodIngredients_IngredientId",
                 table: "FoodIngredients",
                 column: "IngredientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Foods_CustomerId",
-                table: "Foods",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_History_FoodId",
-                table: "History",
-                column: "FoodId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -286,16 +237,13 @@ namespace FoodFiestaApp.Migrations
                 name: "FoodIngredients");
 
             migrationBuilder.DropTable(
-                name: "History");
-
-            migrationBuilder.DropTable(
-                name: "Ingredients");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Foods");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Ingredients");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FoodFiestaApp.Data;
+using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 
@@ -13,7 +14,7 @@ namespace FoodFiestaApp.Repository
         }
         public ICollection<Cart> GetAllCarts()
         {
-            return _contexet.Cart.OrderBy(c => c.Id).ToList();
+            return _contexet.Carts.OrderBy(c => c.Id).ToList();
         }
     }
 }

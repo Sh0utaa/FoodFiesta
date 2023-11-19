@@ -1,4 +1,5 @@
-﻿using FoodFiestaApp.Models;
+﻿using FoodFiestaApp.DTO;
+using FoodFiestaApp.Models;
 
 namespace FoodFiestaApp.Interfaces
 {
@@ -7,6 +8,6 @@ namespace FoodFiestaApp.Interfaces
         ICollection<Food> GetFood();
         Food GetFoodById(int id);
         Food GetFood(string name);
-        bool CreateFood(int IngredientId,Food food);
+        void CreateFood(Food food);
     }
 }

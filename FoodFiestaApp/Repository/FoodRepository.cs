@@ -1,4 +1,5 @@
 ﻿using FoodFiestaApp.Data;
+using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 
@@ -26,9 +27,18 @@ namespace FoodFiestaApp.Repository
             return foodItem;
         }
 
-        public bool CreateFood(Food food)
+        public void CreateFood(Food food)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Foods.Add(food);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new NullReferenceException("Error creating food", ex);
+            }
         }
+
     }
 }

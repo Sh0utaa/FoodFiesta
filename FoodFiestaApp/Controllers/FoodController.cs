@@ -4,6 +4,7 @@ using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using FoodFiestaApp.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodFiestaApp.Controllers
 {
@@ -43,7 +44,7 @@ namespace FoodFiestaApp.Controllers
         }
 
         [HttpGet("byName/{foodName}")]
-        [ProducesResponseType(200, Type = typeof(Food))]
+        [ProducesResponseType(200, Type = typeof(FoodDto))]
         [ProducesResponseType(400)]
         public IActionResult GetFood(string foodName)
         {
@@ -56,5 +57,21 @@ namespace FoodFiestaApp.Controllers
 
             return Ok(singleFood);
         }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateFood([FromBody] Food food)
+        {
+            if (food == null)
+            {
+                return BadRequest("Food object is null");
+            }
+
+            _foodRepository.CreateFood(food);
+
+            return Ok(food);
+        }
+
     }
 }

@@ -75,6 +75,9 @@ namespace FoodFiestaApp.Migrations
                     b.Property<DateTime>("Datetime")
                         .HasColumnType("datetime2");
 
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
@@ -89,14 +92,14 @@ namespace FoodFiestaApp.Migrations
                         {
                             Id = 1,
                             CustomerId = "1",
-                            Datetime = new DateTime(2023, 11, 17, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3811),
+                            Datetime = new DateTime(2023, 11, 18, 21, 35, 24, 669, DateTimeKind.Local).AddTicks(6033),
                             Text = "Delicious pizza!"
                         },
                         new
                         {
                             Id = 2,
                             CustomerId = "2",
-                            Datetime = new DateTime(2023, 11, 16, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3838),
+                            Datetime = new DateTime(2023, 11, 17, 21, 35, 24, 669, DateTimeKind.Local).AddTicks(6062),
                             Text = "The hotdog was amazing!"
                         });
                 });
@@ -163,14 +166,14 @@ namespace FoodFiestaApp.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c285b5a3-127c-4169-be3f-c1f1f8be6623",
+                            ConcurrencyStamp = "322e2a0a-8856-4355-b1f9-700f7070ddb5",
                             Email = "john.doe@example.com",
                             EmailConfirmed = false,
                             FirstName = "John",
                             LastName = "Doe",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "02576d1a-c98a-4d06-a4b3-fb42ee926251",
+                            SecurityStamp = "1aeddb60-02e6-4f3c-b11f-76efe0251877",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe_27"
                         },
@@ -178,14 +181,14 @@ namespace FoodFiestaApp.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "101a1a6f-8b0b-461c-a690-c1fbe5176610",
+                            ConcurrencyStamp = "722ab4e5-937b-446f-bbdf-ff8aa421b8c4",
                             Email = "jane.smith@example.com",
                             EmailConfirmed = false,
                             FirstName = "Jane",
                             LastName = "Smith",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1f976cf9-6496-4acc-85a1-f641d318c92e",
+                            SecurityStamp = "2698f581-6358-412b-b39c-3b6e60d1b142",
                             TwoFactorEnabled = false,
                             UserName = "JaneSmith_07"
                         });
@@ -199,18 +202,16 @@ namespace FoodFiestaApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("FoodImgUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FoodName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
 
-                    b.HasIndex("CustomerId");
+                    b.HasKey("Id");
 
                     b.ToTable("Foods");
 
@@ -219,25 +220,29 @@ namespace FoodFiestaApp.Migrations
                         {
                             Id = 1,
                             FoodImgUrl = "pizza.jpg",
-                            FoodName = "Pizza"
+                            FoodName = "Pizza",
+                            Price = 30.0
                         },
                         new
                         {
                             Id = 2,
                             FoodImgUrl = "HotDog.jpg",
-                            FoodName = "HotDog"
+                            FoodName = "HotDog",
+                            Price = 1.5
                         },
                         new
                         {
                             Id = 3,
                             FoodImgUrl = "burger.jpg",
-                            FoodName = "Burger"
+                            FoodName = "Burger",
+                            Price = 10.0
                         },
                         new
                         {
                             Id = 4,
                             FoodImgUrl = "pasta.jpg",
-                            FoodName = "Pasta"
+                            FoodName = "Pasta",
+                            Price = 6.0
                         });
                 });
 
@@ -333,43 +338,6 @@ namespace FoodFiestaApp.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FoodFiestaApp.Models.History", b =>
-                {
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("FoodId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Datetime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("CustomerId", "FoodId");
-
-                    b.HasIndex("FoodId");
-
-                    b.ToTable("History");
-
-                    b.HasData(
-                        new
-                        {
-                            CustomerId = "1",
-                            FoodId = 1,
-                            Datetime = new DateTime(2023, 11, 13, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3968),
-                            Id = 1
-                        },
-                        new
-                        {
-                            CustomerId = "2",
-                            FoodId = 2,
-                            Datetime = new DateTime(2023, 11, 8, 15, 8, 5, 169, DateTimeKind.Local).AddTicks(3973),
-                            Id = 2
-                        });
-                });
-
             modelBuilder.Entity("FoodFiestaApp.Models.Ingredient", b =>
                 {
                     b.Property<int>("Id")
@@ -458,13 +426,6 @@ namespace FoodFiestaApp.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("FoodFiestaApp.Models.Food", b =>
-                {
-                    b.HasOne("FoodFiestaApp.Models.Customer", null)
-                        .WithMany("Food")
-                        .HasForeignKey("CustomerId");
-                });
-
             modelBuilder.Entity("FoodFiestaApp.Models.FoodIngredient", b =>
                 {
                     b.HasOne("FoodFiestaApp.Models.Food", "Food")
@@ -484,34 +445,11 @@ namespace FoodFiestaApp.Migrations
                     b.Navigation("Ingredient");
                 });
 
-            modelBuilder.Entity("FoodFiestaApp.Models.History", b =>
-                {
-                    b.HasOne("FoodFiestaApp.Models.Customer", "Customer")
-                        .WithMany("History")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FoodFiestaApp.Models.Food", "Food")
-                        .WithMany("History")
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Food");
-                });
-
             modelBuilder.Entity("FoodFiestaApp.Models.Customer", b =>
                 {
                     b.Navigation("Cart");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("Food");
-
-                    b.Navigation("History");
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.Food", b =>
@@ -519,8 +457,6 @@ namespace FoodFiestaApp.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("FoodIngredientTable");
-
-                    b.Navigation("History");
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.Ingredient", b =>

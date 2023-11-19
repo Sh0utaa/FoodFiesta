@@ -1,4 +1,5 @@
 ﻿using FoodFiestaApp.Data;
+using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using Microsoft.EntityFrameworkCore;
