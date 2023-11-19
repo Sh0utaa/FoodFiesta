@@ -12,6 +12,24 @@ namespace FoodFiestaApp.Repository
         {
             _context = context;
         }
+
+        public void CreateIngredient(IngredientDto ingredientDto)
+        {
+            try
+            {
+                var newIngredient = new Ingredient
+                {
+                    IngredientName = ingredientDto.IngredientName,
+                };
+                _context.Add(newIngredient);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public Ingredient GetIngredient(string name)
         {
             var singleEngridient = _context.Ingredients.Where(i => i.IngredientName == name).FirstOrDefault();

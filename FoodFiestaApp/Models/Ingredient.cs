@@ -7,6 +7,6 @@ namespace FoodFiestaApp.Models
     {
         public int Id { get; set; }
         public string? IngredientName { get; set; }
-        public ICollection<FoodIngredient> FoodIngredientTable { get; set; }
+        public ICollection<FoodIngredient>? FoodIngredientTable { get; set; }
     }
 }

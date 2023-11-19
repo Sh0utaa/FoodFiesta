@@ -6,5 +6,6 @@ namespace FoodFiestaApp.Interfaces
     public interface IFoodIngredientRepository
     {
         ICollection<FoodIngredient> GetFoodIngredients();
+        void CreateFoodIngredient(FoodIngredientDto foodIngredientDto);
     }
 }

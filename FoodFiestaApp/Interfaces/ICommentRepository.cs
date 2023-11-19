@@ -7,5 +7,6 @@ namespace FoodFiestaApp.Interfaces
     {
         ICollection<Comment> GetComments();
         Comment GetComment(int Id);
+        void CreateComment(CommentDto commentDto);
     }
 }

@@ -29,9 +29,34 @@ namespace FoodFiestaApp.Repository
             return customerExists;
         }
 
-        public void CreateCustomer(Customer customer)
+        public void CreateCustomer(CustomerDto customerDto)
         {
-            _context.Customers.Add(customer);
+            try
+            {
+                var newCustomer = new Customer
+                {
+                    FirstName = customerDto.FirstName,
+                    LastName = customerDto.LastName,
+                    UserName = customerDto.UserName,
+                    NormalizedUserName = customerDto.NormalizedUserName,
+                    Email = customerDto.Email,
+                    NormalizedEmail = customerDto.NormalizedEmail,
+                    EmailConfirmed = customerDto.EmailConfirmed,
+                    PasswordHash = customerDto.PasswordHash,
+                    PhoneNumber = customerDto.PhoneNumber,
+                    PhoneNumberConfirmed = customerDto.PhoneNumberConfirmed,
+                    TwoFactorEnabled = customerDto.TwoFactorEnabled,
+                    LockoutEnd = customerDto.LockoutEnd,
+                    LockoutEnabled = customerDto.LockoutEnabled,
+                    AccessFailedCount = customerDto.AccessFailedCount
+                };
+                _context.Add(newCustomer);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -27,10 +27,16 @@ namespace FoodFiestaApp.Repository
             return foodItem;
         }
 
-        public void CreateFood(Food food)
+        public void CreateFood(FoodDto foodDto)
         {
             try
             {
+                var food = new Food
+                {
+                    FoodName = foodDto.FoodName,
+                    Price = foodDto.Price,
+                    FoodImgUrl = foodDto.FoodImgUrl
+                };
                 _context.Foods.Add(food);
                 _context.SaveChanges();
             }

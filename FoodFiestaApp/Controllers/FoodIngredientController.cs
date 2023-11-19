@@ -29,5 +29,20 @@ namespace FoodFiestaApp.Controllers
                 return BadRequest(ModelState);
             return Ok(allFoodIngredients);
         }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateFood([FromBody] FoodIngredientDto foodIngredientDto)
+        {
+            if (foodIngredientDto == null)
+            {
+                return BadRequest("foodIngredient object is null");
+            }
+
+            _foodIngredientRepository.CreateFoodIngredient(foodIngredientDto);
+
+            return Ok(foodIngredientDto);
+        }
     }
 }

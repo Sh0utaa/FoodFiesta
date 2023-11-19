@@ -2,6 +2,7 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
+using FoodFiestaApp.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
@@ -38,6 +39,21 @@ namespace FoodFiestaApp.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
             return Ok(singleEngridient);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateIngredient([FromBody] IngredientDto ingredient)
+        {
+            if (ingredient == null)
+            {
+                return BadRequest("ingredient object is null");
+            }
+
+            _ingredientRepository.CreateIngredient(ingredient);
+
+            return Ok(ingredient);
         }
     }
 }

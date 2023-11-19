@@ -61,7 +61,7 @@ namespace FoodFiestaApp.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateFood([FromBody] Food food)
+        public IActionResult CreateFood([FromBody] FoodDto food)
         {
             if (food == null)
             {

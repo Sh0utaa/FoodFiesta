@@ -23,5 +23,26 @@ namespace FoodFiestaApp.Repository
             return singleComment;
         }
 
+        public void CreateComment(CommentDto commentDto)
+        {
+            try
+            {
+                var newComment = new Comment
+                {
+                    CustomerId = commentDto.CustomerId,
+                    Text = commentDto.Text,
+                    Rating = commentDto.Rating,
+                };
+
+                _context.Add(newComment);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

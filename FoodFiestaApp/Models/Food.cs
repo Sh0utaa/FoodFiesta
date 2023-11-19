@@ -1,6 +1,4 @@
-﻿using FoodFiestaApp.DTO;
-
-namespace FoodFiestaApp.Models
+﻿namespace FoodFiestaApp.Models
 {
     public class Food
     {
@@ -9,7 +7,8 @@ namespace FoodFiestaApp.Models
         public double? Price { get; set; }
         public string? FoodImgUrl { get; set; }
 
-        public ICollection<Cart> Cart { get; set; }
-        public ICollection<FoodIngredient> FoodIngredientTable { get; set; }
+        // Make the navigation properties optional
+        public ICollection<Cart>? Cart { get; set; }
+        public ICollection<FoodIngredient>? FoodIngredientTable { get; set; }
     }
 }

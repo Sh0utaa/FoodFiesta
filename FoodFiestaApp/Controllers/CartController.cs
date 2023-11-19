@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
+using FoodFiestaApp.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
@@ -26,6 +27,20 @@ namespace FoodFiestaApp.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
             return Ok(allCarts);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateFood([FromBody] CartDto cartDto)
+        {
+            if (cartDto == null)
+            {
+                return BadRequest("Cart object is null");
+            }
+
+            _cartRepository.CreateCart(cartDto);
+            return Ok(cartDto);
         }
     }
 }

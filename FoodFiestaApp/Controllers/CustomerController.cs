@@ -2,6 +2,7 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
+using FoodFiestaApp.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
@@ -43,6 +44,21 @@ namespace FoodFiestaApp.Controllers
                 return BadRequest(ModelState);
 
             return Ok(customer);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateFood([FromBody] CustomerDto newCustomer)
+        {
+            if (newCustomer == null)
+            {
+                return BadRequest("Customer object is null");
+            }
+
+            _customerRepository.CreateCustomer(newCustomer);
+
+            return Ok(newCustomer);
         }
     }
 }

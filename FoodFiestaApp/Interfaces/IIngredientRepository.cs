@@ -7,5 +7,6 @@ namespace FoodFiestaApp.Interfaces
     {
         ICollection<Ingredient> GetIngredients();
         Ingredient GetIngredient(string name);
+        void CreateIngredient(IngredientDto ingredient);
     }
 }

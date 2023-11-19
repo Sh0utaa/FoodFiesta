@@ -8,6 +8,6 @@ namespace FoodFiestaApp.Interfaces
         ICollection<Food> GetFood();
         Food GetFoodById(int id);
         Food GetFood(string name);
-        void CreateFood(Food food);
+        void CreateFood(FoodDto foodDto);
     }
 }

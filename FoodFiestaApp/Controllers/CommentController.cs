@@ -45,5 +45,20 @@ namespace FoodFiestaApp.Controllers
 
             return Ok(singleComment);
         }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateFood([FromBody] CommentDto commentDto)
+        {
+            if (commentDto == null)
+            {
+                return BadRequest("Comment object is null");
+            }
+
+            _commentRepository.CreateComment(commentDto);
+
+            return Ok(commentDto);
+        }
     }
 }

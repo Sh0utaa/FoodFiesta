@@ -9,7 +9,7 @@ namespace FoodFiestaApp.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Cart> Cart { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
+        public ICollection<Cart>? Cart { get; set; }
     }
 }
