@@ -23,6 +23,9 @@ namespace FoodFiestaApp.Data
             // Define relationships and configurations here
             base.OnModelCreating(modelBuilder);
 
+            // Invoke SeedData method to seed initial Data
+            SeedData(modelBuilder);
+
             // Configure Cart entity
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Customer)
