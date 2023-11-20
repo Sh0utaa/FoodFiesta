@@ -13,6 +13,11 @@ namespace FoodFiestaApp.Repository
             _context = context;   
         }
 
+        public bool CartExists(int id)
+        {
+            return _context.Carts.Any(c => c.Id == id);
+        }
+
         public void CreateCart(CartDto cartDto)
         {
             try
@@ -35,6 +40,19 @@ namespace FoodFiestaApp.Repository
         public ICollection<Cart> GetAllCarts()
         {
             return _context.Carts.OrderBy(c => c.Id).ToList();
+        }
+
+        public void UpdateCart(Cart cartObject)
+        {
+            try
+            {
+                _context.Update(cartObject);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

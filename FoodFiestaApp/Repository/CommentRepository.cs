@@ -44,5 +44,22 @@ namespace FoodFiestaApp.Repository
             }
         }
 
+        public bool CommentExists(int id)
+        {
+            return _context.Comments.Any(c => c.Id == id);
+        }
+
+        public void UpdateComment(Comment comment)
+        {
+            try
+            {
+                _context.Update(comment);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

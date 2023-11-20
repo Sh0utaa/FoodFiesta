@@ -58,5 +58,18 @@ namespace FoodFiestaApp.Repository
                 throw ex;
             }
         }
+
+        public void UpdateCustomer(Customer customerObject)
+        {
+            try
+            {
+                _context.Update(customerObject);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

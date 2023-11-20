@@ -60,5 +60,34 @@ namespace FoodFiestaApp.Controllers
 
             return Ok(newCustomer);
         }
+
+        [HttpPut("{customerId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateFood([FromBody] CustomerDto customerDto, string customerId)
+        {
+            if (customerDto == null || customerId != customerDto.Id)
+                return BadRequest(ModelState);
+
+            if (!_customerRepository.CustomerExists(customerId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var customerMap = _mapper.Map<Customer>(customerDto);
+
+            try
+            {
+                _customerRepository.UpdateCustomer(customerMap);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something wet wrong updating Customer");
+                throw ex;
+            }
+            return NoContent();
+        }
     }
 }

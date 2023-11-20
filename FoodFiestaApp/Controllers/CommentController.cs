@@ -60,5 +60,34 @@ namespace FoodFiestaApp.Controllers
 
             return Ok(commentDto);
         }
+
+        [HttpPut("{commentId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateFood([FromBody] CommentDto commentDto, int commentId)
+        {
+            if (commentDto == null || commentId != commentDto.Id)
+                return BadRequest(ModelState);
+
+            if (!_commentRepository.CommentExists(commentId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var commentMap = _mapper.Map<Comment>(commentDto);
+
+            try
+            {
+                _commentRepository.UpdateComment(commentMap);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something wet wrong updating Comment");
+                throw ex;
+            }
+            return NoContent();
+        }
     }
 }

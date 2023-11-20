@@ -9,5 +9,6 @@ namespace FoodFiestaApp.Interfaces
         Customer GetCustomer(string id);
         bool CustomerExists(string id);
         void CreateCustomer(CustomerDto customerDto);
+        void UpdateCustomer(Customer customerObject);
     }
 }

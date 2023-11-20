@@ -44,5 +44,34 @@ namespace FoodFiestaApp.Controllers
 
             return Ok(foodIngredientDto);
         }
+
+        [HttpPut("{foodIngredientId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateFoodIngredient([FromBody] FoodIngredientDto updatedFoodIngredient, int foodIngredientId)
+        {
+            if (updatedFoodIngredient == null || foodIngredientId != updatedFoodIngredient.Id)
+                return BadRequest(ModelState);
+
+            if (!_foodIngredientRepository.FoodIngredeintExists(foodIngredientId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var foodIngredientMap = _mapper.Map<FoodIngredient>(updatedFoodIngredient);
+
+            try
+            {
+                _foodIngredientRepository.UpdateFoodIngredient(foodIngredientMap);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something wet wrong updating FoodIngredient");
+                throw ex;
+            }
+            return NoContent();
+        }
     }
 }

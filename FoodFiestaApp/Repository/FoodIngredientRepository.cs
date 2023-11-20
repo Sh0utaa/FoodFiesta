@@ -33,5 +33,23 @@ namespace FoodFiestaApp.Repository
                 throw ex;
             }
         }
+
+        public bool FoodIngredeintExists(int id)
+        {
+            return _context.FoodIngredients.Any(f => f.Id == id);
+        }
+
+        public void UpdateFoodIngredient(FoodIngredient foodIngredientObject)
+        {
+            try
+            {
+                _context.Update(foodIngredientObject);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

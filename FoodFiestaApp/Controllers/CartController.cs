@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
+using FoodFiestaApp.Models;
 using FoodFiestaApp.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +42,35 @@ namespace FoodFiestaApp.Controllers
 
             _cartRepository.CreateCart(cartDto);
             return Ok(cartDto);
+        }
+
+        [HttpPut("{cartId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateFood([FromBody] CartDto cartDto, int cartId)
+        {
+            if (cartDto == null || cartId != cartDto.Id)
+                return BadRequest(ModelState);
+
+            if (!_cartRepository.CartExists(cartId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var cartMap = _mapper.Map<Food>(cartDto);
+
+            try
+            {
+                _cartRepository.UpdateCart(cartMap);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something wet wrong updating Cart");
+                throw ex;
+            }
+            return NoContent();
         }
     }
 }
