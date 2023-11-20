@@ -59,7 +59,7 @@ namespace FoodFiestaApp.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var cartMap = _mapper.Map<Food>(cartDto);
+            var cartMap = _mapper.Map<Cart>(cartDto);
 
             try
             {
