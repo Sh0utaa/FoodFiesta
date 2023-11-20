@@ -9,5 +9,6 @@ namespace FoodFiestaApp.Interfaces
         ICollection<FoodIngredient> GetFoodIngredients();
         void CreateFoodIngredient(FoodIngredientDto foodIngredientDto);
         void UpdateFoodIngredient(FoodIngredient foodIngredientObject);
+        void DeleteFoodIngredient(FoodIngredient foodIngredientObject);
     }
 }

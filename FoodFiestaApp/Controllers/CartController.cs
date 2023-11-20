@@ -33,7 +33,7 @@ namespace FoodFiestaApp.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateFood([FromBody] CartDto cartDto)
+        public IActionResult CreateCart([FromBody] CartDto cartDto)
         {
             if (cartDto == null)
             {
@@ -48,7 +48,7 @@ namespace FoodFiestaApp.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateFood([FromBody] CartDto cartDto, int cartId)
+        public IActionResult UpdateCart([FromBody] CartDto cartDto, int cartId)
         {
             if (cartDto == null || cartId != cartDto.Id)
                 return BadRequest(ModelState);
@@ -72,5 +72,14 @@ namespace FoodFiestaApp.Controllers
             }
             return NoContent();
         }
+
+        [HttpDelete("{cartId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        public IActionResult DeleteCart(int cartId)
+        {
+
+        }
+
     }
 }

@@ -9,5 +9,6 @@ namespace FoodFiestaApp.Interfaces
         bool CartExists(int id);
         void CreateCart(CartDto cartDto);
         void UpdateCart(Cart cartObject);
+        void DeleteCart(Cart cartObject);
     }
 }

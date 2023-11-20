@@ -51,5 +51,11 @@ namespace FoodFiestaApp.Repository
                 throw ex;
             }
         }
+
+        public void DeleteFoodIngredient(FoodIngredient foodIngredientObject)
+        {
+            _context.Remove(foodIngredientObject);
+            _context.SaveChanges();
+        }
     }
 }

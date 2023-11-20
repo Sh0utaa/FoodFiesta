@@ -71,5 +71,11 @@ namespace FoodFiestaApp.Repository
                 throw ex;
             }
         }
+
+        public void DeleteCustomer(Customer customerObject)
+        {
+            _context.Remove(customerObject);
+            _context.SaveChanges();
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace FoodFiestaApp.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateFood([FromBody] CustomerDto newCustomer)
+        public IActionResult CreateCustomer([FromBody] CustomerDto newCustomer)
         {
             if (newCustomer == null)
             {
@@ -65,7 +65,7 @@ namespace FoodFiestaApp.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateFood([FromBody] CustomerDto customerDto, string customerId)
+        public IActionResult UpdateCustomer([FromBody] CustomerDto customerDto, string customerId)
         {
             if (customerDto == null || customerId != customerDto.Id)
                 return BadRequest(ModelState);

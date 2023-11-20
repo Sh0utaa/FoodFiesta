@@ -10,5 +10,6 @@ namespace FoodFiestaApp.Interfaces
         Ingredient GetIngredient(string name);
         void CreateIngredient(IngredientDto ingredient);
         void UpdateIngredient(Ingredient ingredientObject);
+        void DeleteIngredient(Ingredient ingredientObject);
     }
 }

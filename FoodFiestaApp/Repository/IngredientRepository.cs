@@ -30,6 +30,12 @@ namespace FoodFiestaApp.Repository
             }
         }
 
+        public void DeleteIngredient(Ingredient ingredientObject)
+        {
+            _context.Remove(ingredientObject);
+            _context.SaveChanges();
+        }
+
         public Ingredient GetIngredient(string name)
         {
             var singleEngridient = _context.Ingredients.Where(i => i.IngredientName == name).FirstOrDefault();

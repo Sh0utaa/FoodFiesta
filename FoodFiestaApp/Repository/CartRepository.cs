@@ -37,6 +37,12 @@ namespace FoodFiestaApp.Repository
             }
         }
 
+        public void DeleteCart(Cart cartObject)
+        {
+            _context.Remove(cartObject);
+            _context.SaveChanges();
+        }
+
         public ICollection<Cart> GetAllCarts()
         {
             return _context.Carts.OrderBy(c => c.Id).ToList();

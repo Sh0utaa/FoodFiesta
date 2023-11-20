@@ -63,5 +63,11 @@ namespace FoodFiestaApp.Repository
         {
             return _context.Foods.Any(f => f.Id == id);
         }
+
+        public void DeleteFood(Food foodObject)
+        {
+            _context.Remove(foodObject);
+            _context.SaveChanges();
+        }
     }
 }
