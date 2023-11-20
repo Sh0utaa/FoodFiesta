@@ -4,6 +4,7 @@ using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using FoodFiestaApp.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodFiestaApp.Controllers
 {
@@ -55,5 +56,35 @@ namespace FoodFiestaApp.Controllers
 
             return Ok(ingredient);
         }
+
+        [HttpPut("{ingredientId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateIngredient([FromBody] IngredientDto updatedIngredient, int ingredientId)
+        {
+            if (updatedIngredient == null || ingredientId != updatedIngredient.Id)
+                return BadRequest(ModelState);
+
+            if (!_ingredientRepository.IngredientExists(ingredientId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var ingredientMap = _mapper.Map<Ingredient>(updatedIngredient);
+
+            try
+            {
+                _ingredientRepository.UpdateIngredient(ingredientMap);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something wet wrong updating Ingredient");
+                throw ex;
+            }
+            return NoContent();
+        }
+
     }
 }

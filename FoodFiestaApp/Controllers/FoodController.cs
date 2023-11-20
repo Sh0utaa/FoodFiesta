@@ -73,5 +73,33 @@ namespace FoodFiestaApp.Controllers
             return Ok(food);
         }
 
+        [HttpPut("{foodId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateFood([FromBody] FoodDto updatedFood,int foodId)
+        {
+            if (updatedFood == null || foodId != updatedFood.Id)
+                return BadRequest(ModelState);
+
+            if (!_foodRepository.FoodExists(foodId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var foodMap = _mapper.Map<Food>(updatedFood);
+
+            try
+            {
+                _foodRepository.UpdateFood(foodMap);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something wet wrong updating Food");
+                throw ex;
+            }
+            return NoContent();
+        }
     }
 }

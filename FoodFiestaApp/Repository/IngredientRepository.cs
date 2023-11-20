@@ -40,5 +40,23 @@ namespace FoodFiestaApp.Repository
         {
             return _context.Ingredients.OrderBy(i => i.Id).ToList();
         }
+
+        public bool IngredientExists(int id)
+        {
+            return _context.Ingredients.Any(i => i.Id == id);
+        }
+
+        public void UpdateIngredient(Ingredient ingredientObject)
+        {
+            try
+            {
+                _context.Update(ingredientObject);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
