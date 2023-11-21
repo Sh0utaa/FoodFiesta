@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodFiestaApp", "FoodFiestaApp\FoodFiestaApp.csproj", "{A3AB2A11-FDFE-489A-B4FB-6822D4E08339}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodFiestaWebsite", "FoodFiestaWebsite\FoodFiestaWebsite.csproj", "{AC0D4642-33DC-4706-BB7A-B1FECE00A36E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A3AB2A11-FDFE-489A-B4FB-6822D4E08339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3AB2A11-FDFE-489A-B4FB-6822D4E08339}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3AB2A11-FDFE-489A-B4FB-6822D4E08339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC0D4642-33DC-4706-BB7A-B1FECE00A36E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC0D4642-33DC-4706-BB7A-B1FECE00A36E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC0D4642-33DC-4706-BB7A-B1FECE00A36E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC0D4642-33DC-4706-BB7A-B1FECE00A36E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

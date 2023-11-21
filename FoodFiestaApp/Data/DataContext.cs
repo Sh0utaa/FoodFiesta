@@ -83,36 +83,36 @@ namespace FoodFiestaApp.Data
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            // Seed customers
-            var customers = new List<Customer>
-            {
-                new Customer { Id = "1", FirstName = "John", LastName = "Doe", UserName = "JohnDoe_27", Email = "john.doe@example.com" },
-                new Customer { Id = "2", FirstName = "Jane", LastName = "Smith", UserName = "JaneSmith_07", Email = "jane.smith@example.com" },
-                // Add more customers as needed
-            };
+            //Seed customers
+            //var customers = new List<Customer>
+            //{
+            //    new Customer { Id = "1", FirstName = "John", LastName = "Doe", UserName = "JohnDoe_27", Email = "john.doe@example.com" },
+            //    new Customer { Id = "2", FirstName = "Jane", LastName = "Smith", UserName = "JaneSmith_07", Email = "jane.smith@example.com" },
+            //     Add more customers as needed
+            //};
 
-            modelBuilder.Entity<Customer>().HasData(customers);
+            //modelBuilder.Entity<Customer>().HasData(customers);
 
-            // Seed comments
-            var comments = new List<Comment>
-            {
-                new Comment { Id = 1, CustomerId = "1", Text = "Delicious pizza!", Datetime = DateTime.Now.AddDays(-1) },
-                new Comment { Id = 2, CustomerId = "2", Text = "The hotdog was amazing!", Datetime = DateTime.Now.AddDays(-2) },
-                // Add more comments as needed
-            };
+            //Seed comments
+            //var comments = new List<Comment>
+            //{
+            //    new Comment { Id = 1, CustomerId = "1", Text = "Delicious pizza!", Datetime = DateTime.Now.AddDays(-1) },
+            //    new Comment { Id = 2, CustomerId = "2", Text = "The hotdog was amazing!", Datetime = DateTime.Now.AddDays(-2) },
+            //     Add more comments as needed
+            //};
 
-            modelBuilder.Entity<Comment>().HasData(comments);
+            //modelBuilder.Entity<Comment>().HasData(comments);
 
-            // Seed carts
-            var carts = new List<Cart>
-            {
-                new Cart { Id = 1, CustomerId = "1", FoodId = 1 },
-                new Cart { Id = 2, CustomerId = "1", FoodId = 2 },
-                new Cart { Id = 3, CustomerId = "2", FoodId = 3 },
-                // Add more carts as needed
-            };
+            //Seed carts
+            //var carts = new List<Cart>
+            //{
+            //    new Cart { Id = 1, CustomerId = "1", FoodId = 1 },
+            //    new Cart { Id = 2, CustomerId = "1", FoodId = 2 },
+            //    new Cart { Id = 3, CustomerId = "2", FoodId = 3 },
+            //     Add more carts as needed
+            //};
 
-            modelBuilder.Entity<Cart>().HasData(carts);
+            //modelBuilder.Entity<Cart>().HasData(carts);
 
             // Seed foods
             var foods = new List<Food>
