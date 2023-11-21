@@ -2,14 +2,15 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
+using FoodFiestaWebsite.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodFiestaApp.Repository
 {
     public class CommentRepository : ICommentRepository
     {
-        private readonly DataContext _context;
-        public CommentRepository(DataContext context)
+        private readonly DataContext<FoodFiestaWebsiteDBContext> _context;
+        public CommentRepository(DataContext<FoodFiestaWebsiteDBContext> context)
         {
             _context = context;
         }

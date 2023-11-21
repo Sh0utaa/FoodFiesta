@@ -1,14 +1,14 @@
 ﻿using FoodFiestaApp.DTO;
 using FoodFiestaApp.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodFiestaApp.Data
 {
-    public class DataContext : DbContext
+    public class DataContext<TContext> : IdentityDbContext<Customer> where TContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public DataContext(DbContextOptions<TContext> options) : base(options)
         {
-            
         }
 
         public DbSet<Cart> Carts { get; set; }

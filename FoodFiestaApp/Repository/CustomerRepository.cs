@@ -2,13 +2,14 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
+using FoodFiestaWebsite.Data;
 
 namespace FoodFiestaApp.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly DataContext _context;
-        public CustomerRepository(DataContext context)
+        private readonly DataContext<FoodFiestaWebsiteDBContext> _context;
+        public CustomerRepository(DataContext<FoodFiestaWebsiteDBContext> context)
         {
             _context = context;
         }
