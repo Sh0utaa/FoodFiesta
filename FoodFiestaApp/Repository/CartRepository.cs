@@ -48,6 +48,12 @@ namespace FoodFiestaApp.Repository
             return _context.Carts.OrderBy(c => c.Id).ToList();
         }
 
+        public Cart GetCart(int id)
+        {
+            var singleCart = _context.Carts.Where(c => c.Id == id).FirstOrDefault();
+            return singleCart;
+        }
+
         public void UpdateCart(Cart cartObject)
         {
             try

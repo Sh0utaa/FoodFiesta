@@ -89,5 +89,35 @@ namespace FoodFiestaApp.Controllers
             }
             return NoContent();
         }
+
+        [HttpDelete("{commentId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        public IActionResult DeleteComment(int commentId)
+        {
+            if (!_commentRepository.CommentExists(commentId))
+            {
+                return NotFound();
+            }
+
+            var singleComment = _commentRepository.GetComment(commentId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                _commentRepository.DeleteComment(singleComment);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something Went Wrong deleting Comment");
+                throw ex;
+            }
+
+            return NoContent();
+        }
     }
 }

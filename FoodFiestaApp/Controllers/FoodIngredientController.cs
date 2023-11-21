@@ -73,5 +73,35 @@ namespace FoodFiestaApp.Controllers
             }
             return NoContent();
         }
+
+        [HttpDelete("{foodIngredientId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        public IActionResult DeleteFoodIngredient(int foodIngredientId)
+        {
+            if (!_foodIngredientRepository.FoodIngredeintExists(foodIngredientId)) 
+            {
+                return NotFound();
+            }
+
+            var singleFoodIngredient = _foodIngredientRepository.GetFoodIngredient(foodIngredientId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                _foodIngredientRepository.DeleteFoodIngredient(singleFoodIngredient);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something Went Wrong deleting FoodIngredient");
+                throw ex;
+            }
+
+            return NoContent();
+        }
     }
 }

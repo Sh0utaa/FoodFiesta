@@ -10,6 +10,6 @@ namespace FoodFiestaApp.Interfaces
         Comment GetComment(int Id);
         void CreateComment(CommentDto commentDto);
         void UpdateComment(Comment comment);
-        void DeleteComment(Comment commentObject)
+        void DeleteComment(Comment commentObject);
     }
 }

@@ -78,7 +78,29 @@ namespace FoodFiestaApp.Controllers
         [ProducesResponseType(204)]
         public IActionResult DeleteCart(int cartId)
         {
+            if (!_cartRepository.CartExists(cartId))
+            {
+                return NotFound();
+            }
 
+            var singleCart = _cartRepository.GetCart(cartId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                _cartRepository.DeleteCart(singleCart);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something Went Wrong deleting Cart");
+                throw ex;
+            }
+
+            return NoContent();
         }
 
     }

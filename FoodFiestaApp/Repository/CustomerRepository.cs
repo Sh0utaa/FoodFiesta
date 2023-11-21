@@ -74,6 +74,12 @@ namespace FoodFiestaApp.Repository
 
         public void DeleteCustomer(Customer customerObject)
         {
+            // Remove references from Carts & Comments
+            var allCarts = _context.Carts.Where(ca => ca.CustomerId == customerObject.Id);
+            var allComments = _context.Comments.Where(co => co.CustomerId == customerObject.Id);
+            _context.Carts.RemoveRange(allCarts);
+            _context.Comments.RemoveRange(allComments);
+
             _context.Remove(customerObject);
             _context.SaveChanges();
         }

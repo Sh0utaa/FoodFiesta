@@ -89,5 +89,35 @@ namespace FoodFiestaApp.Controllers
             }
             return NoContent();
         }
+
+        [HttpDelete("{customerId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        public IActionResult DeleteCustomer(string customerId)
+        {
+            if (!_customerRepository.CustomerExists(customerId))
+            {
+                return NotFound();
+            }
+
+            var singleCustomer = _customerRepository.GetCustomer(customerId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                _customerRepository.DeleteCustomer(singleCustomer);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something Went Wrong deleting Customer");
+                throw ex;
+            }
+
+            return NoContent();
+        }
     }
 }

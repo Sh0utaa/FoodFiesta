@@ -32,6 +32,10 @@ namespace FoodFiestaApp.Repository
 
         public void DeleteIngredient(Ingredient ingredientObject)
         {
+            // Remove references from FoodIngredients
+            var foodIngredients = _context.FoodIngredients.Where(fi => fi.IngredientId == ingredientObject.Id);
+            _context.FoodIngredients.RemoveRange(foodIngredients);
+
             _context.Remove(ingredientObject);
             _context.SaveChanges();
         }
@@ -39,6 +43,12 @@ namespace FoodFiestaApp.Repository
         public Ingredient GetIngredient(string name)
         {
             var singleEngridient = _context.Ingredients.Where(i => i.IngredientName == name).FirstOrDefault();
+            return singleEngridient;
+        }
+
+        public Ingredient GetIngredientById(int id)
+        {
+            var singleEngridient = _context.Ingredients.Where(i => i.Id == id).FirstOrDefault();
             return singleEngridient;
         }
 

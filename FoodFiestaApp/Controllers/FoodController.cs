@@ -101,5 +101,35 @@ namespace FoodFiestaApp.Controllers
             }
             return NoContent();
         }
+
+        [HttpDelete("{foodId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        public IActionResult DeleteFood(int foodId)
+        {
+            if (!_foodRepository.FoodExists(foodId))
+            {
+                return NotFound();
+            }
+
+            var singleFood = _foodRepository.GetFoodById(foodId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                _foodRepository.DeleteFood(singleFood);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Something Went Wrong deleting Food");
+                throw ex;
+            }
+
+            return NoContent();
+        }
     }
 }

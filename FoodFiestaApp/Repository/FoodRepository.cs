@@ -66,6 +66,10 @@ namespace FoodFiestaApp.Repository
 
         public void DeleteFood(Food foodObject)
         {
+            // Remove references from FoodIngredients
+            var foodIngredients = _context.FoodIngredients.Where(fi => fi.FoodId == foodObject.Id);
+            _context.FoodIngredients.RemoveRange(foodIngredients);
+
             _context.Remove(foodObject);
             _context.SaveChanges();
         }

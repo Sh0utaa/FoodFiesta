@@ -7,6 +7,7 @@ namespace FoodFiestaApp.Interfaces
     {
         ICollection<Ingredient> GetIngredients();
         bool IngredientExists(int id);
+        Ingredient GetIngredientById(int id);
         Ingredient GetIngredient(string name);
         void CreateIngredient(IngredientDto ingredient);
         void UpdateIngredient(Ingredient ingredientObject);

@@ -20,72 +20,64 @@ namespace FoodFiestaApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Define relationships and configurations here
             base.OnModelCreating(modelBuilder);
 
-            // Invoke SeedData method to seed initial Data
-            SeedData(modelBuilder);
-
-            // Configure Cart entity
+            // Configure relationships and constraints
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Customer)
                 .WithMany(cu => cu.Cart)
                 .HasForeignKey(c => c.CustomerId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Food)
                 .WithMany(f => f.Cart)
                 .HasForeignKey(c => c.FoodId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure Comment entity
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Customer)
                 .WithMany(cu => cu.Comments)
                 .HasForeignKey(c => c.CustomerId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure Food entity
             modelBuilder.Entity<Food>()
                 .HasMany(f => f.Cart)
                 .WithOne(c => c.Food)
                 .HasForeignKey(c => c.FoodId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Food>()
                 .HasMany(f => f.FoodIngredientTable)
                 .WithOne(fi => fi.Food)
                 .HasForeignKey(fi => fi.FoodId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure FoodIngredient entity
             modelBuilder.Entity<FoodIngredient>()
                 .HasOne(fi => fi.Food)
                 .WithMany(f => f.FoodIngredientTable)
                 .HasForeignKey(fi => fi.FoodId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<FoodIngredient>()
                 .HasOne(fi => fi.Ingredient)
                 .WithMany(i => i.FoodIngredientTable)
                 .HasForeignKey(fi => fi.IngredientId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure Ingredient entity
             modelBuilder.Entity<Ingredient>()
                 .HasMany(i => i.FoodIngredientTable)
                 .WithOne(fi => fi.Ingredient)
                 .HasForeignKey(fi => fi.IngredientId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
 

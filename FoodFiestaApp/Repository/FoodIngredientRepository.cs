@@ -57,5 +57,11 @@ namespace FoodFiestaApp.Repository
             _context.Remove(foodIngredientObject);
             _context.SaveChanges();
         }
+
+        public FoodIngredient GetFoodIngredient(int id)
+        {
+            var singleFoodIngredient = _context.FoodIngredients.Where(f => f.Id == id).FirstOrDefault();
+            return singleFoodIngredient;
+        }
     }
 }
