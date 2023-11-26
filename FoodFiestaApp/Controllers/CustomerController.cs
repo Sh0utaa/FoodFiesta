@@ -49,11 +49,11 @@ namespace FoodFiestaApp.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateCustomer([FromBody] CustomerDto newCustomer)
+        public IActionResult CreateCustomer([FromBody] RegisterCustomerDTO newCustomer)
         {
             if (newCustomer == null)
             {
-                return BadRequest("Customer object is null");
+                return BadRequest("RegisterCustomer object is null");
             }
 
             _customerRepository.CreateCustomer(newCustomer);

@@ -5,17 +5,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodFiestaApp.Migrations
 {
-    public partial class SeedInitialData : Migration
+    public partial class SeedData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
-                table: "Customers",
+                table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "59461fd0-7c70-419c-9b76-bc4d32488d1b", "john.doe@example.com", false, "John", "Doe", false, null, null, null, null, null, false, "31312f9d-441c-41d1-80ca-e634f5c13085", false, "JohnDoe_27" },
-                    { "2", 0, "35c7ab7e-e693-4ffc-80a9-830d8ba7750e", "jane.smith@example.com", false, "Jane", "Smith", false, null, null, null, null, null, false, "a533e662-98cf-4b74-a092-c3f16ea7e6e7", false, "JaneSmith_07" }
+                    { "1", 0, "1c67a20f-702e-4803-92b0-bc3f33305eee", "john.doe@example.com", false, "John", "Doe", false, null, null, null, null, null, false, "baaae2b2-08f6-4441-8884-6b8b505170c0", false, "JohnDoe_27" },
+                    { "2", 0, "4ff4c4fc-5152-41cb-886d-46f3bcd5edc2", "jane.smith@example.com", false, "Jane", "Smith", false, null, null, null, null, null, false, "a64db2f8-cbb3-4c78-bfc2-941b999e853e", false, "JaneSmith_07" }
                 });
 
             migrationBuilder.InsertData(
@@ -59,8 +59,8 @@ namespace FoodFiestaApp.Migrations
                 columns: new[] { "Id", "CustomerId", "Datetime", "Rating", "Text" },
                 values: new object[,]
                 {
-                    { 1, "1", new DateTime(2023, 11, 19, 2, 6, 37, 843, DateTimeKind.Local).AddTicks(9859), null, "Delicious pizza!" },
-                    { 2, "2", new DateTime(2023, 11, 18, 2, 6, 37, 843, DateTimeKind.Local).AddTicks(9887), null, "The hotdog was amazing!" }
+                    { 1, "1", new DateTime(2023, 11, 25, 20, 14, 9, 720, DateTimeKind.Local).AddTicks(4491), null, "Delicious pizza!" },
+                    { 2, "2", new DateTime(2023, 11, 24, 20, 14, 9, 720, DateTimeKind.Local).AddTicks(4527), null, "The hotdog was amazing!" }
                 });
 
             migrationBuilder.InsertData(
@@ -171,12 +171,12 @@ namespace FoodFiestaApp.Migrations
                 keyValue: 12);
 
             migrationBuilder.DeleteData(
-                table: "Customers",
+                table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "1");
 
             migrationBuilder.DeleteData(
-                table: "Customers",
+                table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "2");
 

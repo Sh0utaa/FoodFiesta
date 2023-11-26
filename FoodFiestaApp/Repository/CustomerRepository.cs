@@ -2,14 +2,14 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
-using FoodFiestaWebsite.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace FoodFiestaApp.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly DataContext<FoodFiestaWebsiteDBContext> _context;
-        public CustomerRepository(DataContext<FoodFiestaWebsiteDBContext> context)
+        private readonly DataContext _context;
+        public CustomerRepository(DataContext context)
         {
             _context = context;
         }
@@ -30,26 +30,20 @@ namespace FoodFiestaApp.Repository
             return customerExists;
         }
 
-        public void CreateCustomer(CustomerDto customerDto)
+        public void CreateCustomer(RegisterCustomerDTO registerCustomerDTO)
         {
             try
             {
+                var passwordHasher = new PasswordHasher<Customer>();
+                var passwordHash = passwordHasher.HashPassword(null, registerCustomerDTO.Password);
+
                 var newCustomer = new Customer
                 {
-                    FirstName = customerDto.FirstName,
-                    LastName = customerDto.LastName,
-                    UserName = customerDto.UserName,
-                    NormalizedUserName = customerDto.NormalizedUserName,
-                    Email = customerDto.Email,
-                    NormalizedEmail = customerDto.NormalizedEmail,
-                    EmailConfirmed = customerDto.EmailConfirmed,
-                    PasswordHash = customerDto.PasswordHash,
-                    PhoneNumber = customerDto.PhoneNumber,
-                    PhoneNumberConfirmed = customerDto.PhoneNumberConfirmed,
-                    TwoFactorEnabled = customerDto.TwoFactorEnabled,
-                    LockoutEnd = customerDto.LockoutEnd,
-                    LockoutEnabled = customerDto.LockoutEnabled,
-                    AccessFailedCount = customerDto.AccessFailedCount
+                    FirstName = registerCustomerDTO.FirstName,
+                    LastName = registerCustomerDTO.LastName,
+                    UserName = registerCustomerDTO.UserName,
+                    Email = registerCustomerDTO.Email,
+                    PasswordHash = passwordHash,
                 };
                 _context.Add(newCustomer);
                 _context.SaveChanges();

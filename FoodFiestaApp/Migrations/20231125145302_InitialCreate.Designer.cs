@@ -4,6 +4,7 @@ using FoodFiestaApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodFiestaApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231125145302_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,26 +45,6 @@ namespace FoodFiestaApp.Migrations
                     b.HasIndex("FoodId");
 
                     b.ToTable("Carts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = "1",
-                            FoodId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CustomerId = "1",
-                            FoodId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CustomerId = "2",
-                            FoodId = 3
-                        });
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.Comment", b =>
@@ -90,22 +72,6 @@ namespace FoodFiestaApp.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Comments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = "1",
-                            Datetime = new DateTime(2023, 11, 25, 20, 14, 9, 720, DateTimeKind.Local).AddTicks(4491),
-                            Text = "Delicious pizza!"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CustomerId = "2",
-                            Datetime = new DateTime(2023, 11, 24, 20, 14, 9, 720, DateTimeKind.Local).AddTicks(4527),
-                            Text = "The hotdog was amazing!"
-                        });
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.Customer", b =>
@@ -177,38 +143,6 @@ namespace FoodFiestaApp.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1c67a20f-702e-4803-92b0-bc3f33305eee",
-                            Email = "john.doe@example.com",
-                            EmailConfirmed = false,
-                            FirstName = "John",
-                            LastName = "Doe",
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "baaae2b2-08f6-4441-8884-6b8b505170c0",
-                            TwoFactorEnabled = false,
-                            UserName = "JohnDoe_27"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "4ff4c4fc-5152-41cb-886d-46f3bcd5edc2",
-                            Email = "jane.smith@example.com",
-                            EmailConfirmed = false,
-                            FirstName = "Jane",
-                            LastName = "Smith",
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "a64db2f8-cbb3-4c78-bfc2-941b999e853e",
-                            TwoFactorEnabled = false,
-                            UserName = "JaneSmith_07"
-                        });
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.Food", b =>
@@ -231,36 +165,6 @@ namespace FoodFiestaApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Foods");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FoodImgUrl = "pizza.jpg",
-                            FoodName = "Pizza",
-                            Price = 30.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FoodImgUrl = "HotDog.jpg",
-                            FoodName = "HotDog",
-                            Price = 1.5
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FoodImgUrl = "burger.jpg",
-                            FoodName = "Burger",
-                            Price = 10.0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FoodImgUrl = "pasta.jpg",
-                            FoodName = "Pasta",
-                            Price = 6.0
-                        });
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.FoodIngredient", b =>
@@ -284,80 +188,6 @@ namespace FoodFiestaApp.Migrations
                     b.HasIndex("IngredientId");
 
                     b.ToTable("FoodIngredients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FoodId = 1,
-                            IngredientId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FoodId = 1,
-                            IngredientId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FoodId = 1,
-                            IngredientId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FoodId = 2,
-                            IngredientId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FoodId = 2,
-                            IngredientId = 5
-                        },
-                        new
-                        {
-                            Id = 6,
-                            FoodId = 3,
-                            IngredientId = 4
-                        },
-                        new
-                        {
-                            Id = 7,
-                            FoodId = 3,
-                            IngredientId = 6
-                        },
-                        new
-                        {
-                            Id = 8,
-                            FoodId = 3,
-                            IngredientId = 7
-                        },
-                        new
-                        {
-                            Id = 9,
-                            FoodId = 3,
-                            IngredientId = 8
-                        },
-                        new
-                        {
-                            Id = 10,
-                            FoodId = 4,
-                            IngredientId = 2
-                        },
-                        new
-                        {
-                            Id = 11,
-                            FoodId = 4,
-                            IngredientId = 6
-                        },
-                        new
-                        {
-                            Id = 12,
-                            FoodId = 4,
-                            IngredientId = 7
-                        });
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.Ingredient", b =>
@@ -374,48 +204,6 @@ namespace FoodFiestaApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ingredients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IngredientName = "Cheese"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IngredientName = "Tomato Sauce"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IngredientName = "Pepperoni"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IngredientName = "Bun"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IngredientName = "Sausage"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            IngredientName = "Lettuce"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            IngredientName = "Tomato"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            IngredientName = "Mayonnaise"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

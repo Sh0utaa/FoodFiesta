@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodFiestaApp.Data
 {
-    public class DataContext<TContext> : IdentityDbContext<Customer> where TContext : DbContext
+    public class DataContext : IdentityDbContext<Customer>
     {
-        public DataContext(DbContextOptions<TContext> options) : base(options)
+        public DataContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -78,41 +78,40 @@ namespace FoodFiestaApp.Data
                 .HasForeignKey(fi => fi.IngredientId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            SeedData(modelBuilder);
         }
 
 
         private void SeedData(ModelBuilder modelBuilder)
         {
             //Seed customers
-            //var customers = new List<Customer>
-            //{
-            //    new Customer { Id = "1", FirstName = "John", LastName = "Doe", UserName = "JohnDoe_27", Email = "john.doe@example.com" },
-            //    new Customer { Id = "2", FirstName = "Jane", LastName = "Smith", UserName = "JaneSmith_07", Email = "jane.smith@example.com" },
-            //     Add more customers as needed
-            //};
+            var customers = new List<Customer>
+            {
+                new Customer { Id = "1", FirstName = "John", LastName = "Doe", UserName = "JohnDoe_27", Email = "john.doe@example.com" },
+                new Customer { Id = "2", FirstName = "Jane", LastName = "Smith", UserName = "JaneSmith_07", Email = "jane.smith@example.com" },
+            };
 
-            //modelBuilder.Entity<Customer>().HasData(customers);
+            modelBuilder.Entity<Customer>().HasData(customers);
 
             //Seed comments
-            //var comments = new List<Comment>
-            //{
-            //    new Comment { Id = 1, CustomerId = "1", Text = "Delicious pizza!", Datetime = DateTime.Now.AddDays(-1) },
-            //    new Comment { Id = 2, CustomerId = "2", Text = "The hotdog was amazing!", Datetime = DateTime.Now.AddDays(-2) },
-            //     Add more comments as needed
-            //};
+            var comments = new List<Comment>
+            {
+                new Comment { Id = 1, CustomerId = "1", Text = "Delicious pizza!", Datetime = DateTime.Now.AddDays(-1) },
+                new Comment { Id = 2, CustomerId = "2", Text = "The hotdog was amazing!", Datetime = DateTime.Now.AddDays(-2) },
+            };
 
-            //modelBuilder.Entity<Comment>().HasData(comments);
+            modelBuilder.Entity<Comment>().HasData(comments);
 
             //Seed carts
-            //var carts = new List<Cart>
-            //{
-            //    new Cart { Id = 1, CustomerId = "1", FoodId = 1 },
-            //    new Cart { Id = 2, CustomerId = "1", FoodId = 2 },
-            //    new Cart { Id = 3, CustomerId = "2", FoodId = 3 },
-            //     Add more carts as needed
-            //};
+            var carts = new List<Cart>
+            {
+                new Cart { Id = 1, CustomerId = "1", FoodId = 1 },
+                new Cart { Id = 2, CustomerId = "1", FoodId = 2 },
+                new Cart { Id = 3, CustomerId = "2", FoodId = 3 },
+            };
 
-            //modelBuilder.Entity<Cart>().HasData(carts);
+            modelBuilder.Entity<Cart>().HasData(carts);
 
             // Seed foods
             var foods = new List<Food>

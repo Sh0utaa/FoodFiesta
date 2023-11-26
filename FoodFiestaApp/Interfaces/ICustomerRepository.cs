@@ -8,7 +8,7 @@ namespace FoodFiestaApp.Interfaces
         ICollection<Customer> GetCustomers();
         Customer GetCustomer(string id);
         bool CustomerExists(string id);
-        void CreateCustomer(CustomerDto customerDto);
+        void CreateCustomer(RegisterCustomerDTO customerDto);
         void UpdateCustomer(Customer customerObject);
         void DeleteCustomer(Customer customerObject);
     }
