@@ -5,6 +5,7 @@ using FoodFiestaApp.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Add services to the container.
 
@@ -28,6 +29,19 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7294")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithMethods("PUT", "DELETE", "GET");
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,6 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 

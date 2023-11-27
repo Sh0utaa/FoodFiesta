@@ -3,10 +3,12 @@ using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using FoodFiestaApp.Repository;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
 {
+    [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : Controller
@@ -22,6 +24,7 @@ namespace FoodFiestaApp.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<LoginCustomerDTO>))]
         public IActionResult GetCustomers()
+        
         {
             var allCustomers = _mapper.Map<List<LoginCustomerDTO>>(_customerRepository.GetCustomers());
 
