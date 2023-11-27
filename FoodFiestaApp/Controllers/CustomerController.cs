@@ -20,10 +20,10 @@ namespace FoodFiestaApp.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<CustomerDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<LoginCustomerDTO>))]
         public IActionResult GetCustomers()
         {
-            var allCustomers = _mapper.Map<List<CustomerDto>>(_customerRepository.GetCustomers());
+            var allCustomers = _mapper.Map<List<LoginCustomerDTO>>(_customerRepository.GetCustomers());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -31,14 +31,14 @@ namespace FoodFiestaApp.Controllers
         }
 
         [HttpGet("{Id}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<CustomerDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<LoginCustomerDTO>))]
         [ProducesResponseType(400)]
         public IActionResult GetCustomer(string Id)
         {
             if (_customerRepository.GetCustomer(Id) is null)
                 return NotFound();
 
-            var customer = _mapper.Map<CustomerDto>(_customerRepository.GetCustomer(Id));
+            var customer = _mapper.Map<LoginCustomerDTO>(_customerRepository.GetCustomer(Id));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -65,7 +65,7 @@ namespace FoodFiestaApp.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateCustomer([FromBody] CustomerDto customerDto, string customerId)
+        public IActionResult UpdateCustomer([FromBody] LoginCustomerDTO customerDto, string customerId)
         {
             if (customerDto == null || customerId != customerDto.Id)
                 return BadRequest(ModelState);

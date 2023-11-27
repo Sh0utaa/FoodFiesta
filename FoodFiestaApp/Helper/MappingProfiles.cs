@@ -9,7 +9,7 @@ namespace FoodFiestaApp.Helper
         public MappingProfiles()
         {
             CreateMap<Customer, CustomerDto>().ReverseMap();
-            CreateMap<RegisterCustomerDTO, Customer>().ReverseMap();
+            CreateMap<LoginCustomerDTO, Customer>().ReverseMap();
             CreateMap<Comment, CommentDto>().ReverseMap();
             CreateMap<Cart, CartDto>().ReverseMap();
             CreateMap<Food, FoodDto>().ReverseMap();
