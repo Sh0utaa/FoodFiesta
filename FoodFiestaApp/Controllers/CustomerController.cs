@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
 {
-    [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : Controller

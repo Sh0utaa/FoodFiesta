@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Log in";
+    Layout = "/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-10">
+        <section>
+            <div>
+                <h2>Welcome back!</h2>
+                <hr />
+                <!-- Replace the validation summary with a regular div -->
+                <div class="text-danger" role="alert" id="validationSummary"></div>
+
+                <!-- Use regular HTML inputs -->
+                <div class="form-floating mb-3">
+                    <input id="email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label for="email" class="form-label">Email</label>
+                    <span id="emailValidation" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input id="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label for="password" class="form-label">Password</label>
+                    <span id="passwordValidation" class="text-danger"></span>
+                </div>
+
+                <!-- Use a regular button instead of a submit button -->
+                <div>
+                    <button id="login-submit" type="button" class="w-100 btn btn-lg btn-primary" onclick="submitForm()">Log in</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+    function submitForm() {
+        // Get values from the regular HTML inputs
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        // Perform any validation if needed
+
+        // Simulate form submission or perform other actions
+        console.log("Email: " + email);
+        console.log("Password: " + password);
+         
+    }
+</script>
