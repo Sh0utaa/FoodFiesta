@@ -13,8 +13,6 @@ namespace FoodFiestaApp.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public static User user = new User();
-
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
         public AuthController(IConfiguration configuration, IUserRepository userRepository)
@@ -28,9 +26,12 @@ namespace FoodFiestaApp.Controllers
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            user.Username = request.Username;
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+            var user = new User()
+            {
+                Username = request.Username,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+            };
 
             _userRepository.CreateUser(user);
             return Ok(user);
@@ -39,12 +40,13 @@ namespace FoodFiestaApp.Controllers
         [HttpPost("login")]
         public ActionResult<string> Login(UserDTO request)
         {
-            if(user.Username != request.Username)
+            var user = _userRepository.GetUserByName(request.Username);
+            if (user.Username != request.Username)
             {
                 return BadRequest("User not found.");
             }
 
-            if(!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return BadRequest("Wrong pasword.");
             }

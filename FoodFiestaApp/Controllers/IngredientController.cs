@@ -2,9 +2,7 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
-using FoodFiestaApp.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FoodFiestaApp.Controllers
 {

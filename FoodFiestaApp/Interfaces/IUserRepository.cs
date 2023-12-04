@@ -7,6 +7,7 @@ namespace FoodFiestaApp.Interfaces
     {
         ICollection<User> GetUsers();
         User GetUser(int id);
+        User GetUserByName(string name);
         void CreateUser(User user);
         bool UserExists(int id);
         void UpdateUser(User customerObject);

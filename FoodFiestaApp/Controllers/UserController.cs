@@ -2,19 +2,17 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
-using FoodFiestaApp.Repository;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : Controller
+    public class UserController : Controller
     {
         private readonly IUserRepository _customerRepository;
         private readonly IMapper _mapper;
-        public CustomerController(IUserRepository customerRepository, IMapper mapper)
+        public UserController(IUserRepository customerRepository, IMapper mapper)
         {
             _customerRepository = customerRepository;
             _mapper = mapper;
@@ -25,7 +23,7 @@ namespace FoodFiestaApp.Controllers
         public IActionResult GetUsers()
         
         {
-            var allCustomers = _mapper.Map<List<UserDTO>>(_customerRepository.GetUsers());
+            var allCustomers = _customerRepository.GetUsers();
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -40,7 +38,7 @@ namespace FoodFiestaApp.Controllers
             if (_customerRepository.GetUser(Id) is null)
                 return NotFound();
 
-            var customer = _mapper.Map<UserDTO>(_customerRepository.GetUser(Id));
+            var customer = _customerRepository.GetUser(Id);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -49,22 +47,22 @@ namespace FoodFiestaApp.Controllers
         }
 
 
-        [HttpPut("{customerId}")]
+        [HttpPut("{userId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateUser([FromBody] User customerDto, int customerId)
+        public IActionResult UpdateUser([FromBody] User user, int userId)
         {
-            if (customerDto == null || customerId != customerDto.Id)
+            if (user == null || userId != user.Id)
                 return BadRequest(ModelState);
 
-            if (!_customerRepository.UserExists(customerId))
+            if (!_customerRepository.UserExists(userId))
                 return NotFound();
 
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var customerMap = _mapper.Map<User>(customerDto);
+            var customerMap = _mapper.Map<User>(user);
 
             try
             {
@@ -78,17 +76,17 @@ namespace FoodFiestaApp.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{customerId}")]
+        [HttpDelete("{userId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
-        public IActionResult DeleteUser(int customerId)
+        public IActionResult DeleteUser(int userId)
         {
-            if (!_customerRepository.UserExists(customerId))
+            if (!_customerRepository.UserExists(userId))
             {
                 return NotFound();
             }
 
-            var singleCustomer = _customerRepository.GetUser(customerId);
+            var singleCustomer = _customerRepository.GetUser(userId);
 
             if (!ModelState.IsValid)
             {

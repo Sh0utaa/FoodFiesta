@@ -23,6 +23,11 @@ namespace FoodFiestaApp.Repository
             var singleCustomer = _context.Users.Where(p => p.Id == id).FirstOrDefault();
             return singleCustomer;
         }
+        public User GetUserByName(string name)
+        {
+            var singleUser = _context.Users.Where(p => p.Username == name).FirstOrDefault();
+            return singleUser;
+        }
 
         public bool UserExists(int id)
         {
@@ -56,7 +61,17 @@ namespace FoodFiestaApp.Repository
 
         public void CreateUser(User user)
         {
-            _context.Users.Add(user);
+            try
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+
+
     }
 }
