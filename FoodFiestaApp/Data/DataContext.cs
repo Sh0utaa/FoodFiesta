@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodFiestaApp.Data
 {
-    public class DataContext : IdentityDbContext<Customer>
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options)
         {
@@ -13,152 +13,133 @@ namespace FoodFiestaApp.Data
 
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Customer> Customers { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<FoodIngredient> FoodIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            // Configure relationships and constraints here
 
-            // Configure relationships and constraints
+            // Configure Cart
             modelBuilder.Entity<Cart>()
-                .HasOne(c => c.Customer)
-                .WithMany(cu => cu.Cart)
-                .HasForeignKey(c => c.CustomerId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Cart)
+                .HasForeignKey(c => c.userId);
 
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Food)
-                .WithMany(f => f.Cart)
-                .HasForeignKey(c => c.FoodId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithMany()
+                .HasForeignKey(c => c.FoodId);
+
+            // Configure Comment
+            modelBuilder.Entity<Comment>()
+                .HasKey(c => c.Id);
 
             modelBuilder.Entity<Comment>()
-                .HasOne(c => c.Customer)
-                .WithMany(cu => cu.Comments)
-                .HasForeignKey(c => c.CustomerId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.userId);
+
+            // Configure Food
+            modelBuilder.Entity<Food>()
+                .HasKey(f => f.Id);
 
             modelBuilder.Entity<Food>()
                 .HasMany(f => f.Cart)
                 .WithOne(c => c.Food)
-                .HasForeignKey(c => c.FoodId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(c => c.FoodId);
 
             modelBuilder.Entity<Food>()
                 .HasMany(f => f.FoodIngredientTable)
                 .WithOne(fi => fi.Food)
-                .HasForeignKey(fi => fi.FoodId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(fi => fi.FoodId);
+
+            // Configure FoodIngredient
+            modelBuilder.Entity<FoodIngredient>()
+                .HasKey(fi => fi.Id);
 
             modelBuilder.Entity<FoodIngredient>()
                 .HasOne(fi => fi.Food)
                 .WithMany(f => f.FoodIngredientTable)
-                .HasForeignKey(fi => fi.FoodId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(fi => fi.FoodId);
 
             modelBuilder.Entity<FoodIngredient>()
                 .HasOne(fi => fi.Ingredient)
                 .WithMany(i => i.FoodIngredientTable)
-                .HasForeignKey(fi => fi.IngredientId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(fi => fi.IngredientId);
 
+            // Configure Ingredient
             modelBuilder.Entity<Ingredient>()
-                .HasMany(i => i.FoodIngredientTable)
-                .WithOne(fi => fi.Ingredient)
-                .HasForeignKey(fi => fi.IngredientId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasKey(i => i.Id);
 
+            // Configure User
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.Id);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Comments)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.userId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Cart)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.userId);
+
+            // Any additional configurations can be added here
             SeedData(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
         }
-
-
         private void SeedData(ModelBuilder modelBuilder)
         {
-            //Seed customers
-            var customers = new List<Customer>
-            {
-                new Customer { Id = "1", FirstName = "John", LastName = "Doe", UserName = "JohnDoe_27", Email = "john.doe@example.com" },
-                new Customer { Id = "2", FirstName = "Jane", LastName = "Smith", UserName = "JaneSmith_07", Email = "jane.smith@example.com" },
-            };
-
-            modelBuilder.Entity<Customer>().HasData(customers);
-
-            //Seed comments
-            var comments = new List<Comment>
-            {
-                new Comment { Id = 1, CustomerId = "1", Text = "Delicious pizza!", Datetime = DateTime.Now.AddDays(-1) },
-                new Comment { Id = 2, CustomerId = "2", Text = "The hotdog was amazing!", Datetime = DateTime.Now.AddDays(-2) },
-            };
-
-            modelBuilder.Entity<Comment>().HasData(comments);
-
-            //Seed carts
-            var carts = new List<Cart>
-            {
-                new Cart { Id = 1, CustomerId = "1", FoodId = 1 },
-                new Cart { Id = 2, CustomerId = "1", FoodId = 2 },
-                new Cart { Id = 3, CustomerId = "2", FoodId = 3 },
-            };
-
-            modelBuilder.Entity<Cart>().HasData(carts);
+            // Seed ingredients
+            modelBuilder.Entity<Ingredient>().HasData(
+                new Ingredient { Id = 1, IngredientName = "Salt" },
+                new Ingredient { Id = 2, IngredientName = "Pepper" }
+                // Add more ingredients as needed
+            );
 
             // Seed foods
-            var foods = new List<Food>
-            {
-                new Food { Id = 1, FoodName = "Pizza", FoodImgUrl = "pizza.jpg", Price = 30},
-                new Food { Id = 2, FoodName = "HotDog", FoodImgUrl = "HotDog.jpg", Price = 1.5},
-                new Food { Id = 3, FoodName = "Burger", FoodImgUrl = "burger.jpg", Price = 10},
-                new Food { Id = 4, FoodName = "Pasta", FoodImgUrl = "pasta.jpg" , Price = 6},
+            modelBuilder.Entity<Food>().HasData(
+                new Food { Id = 1, FoodName = "Pizza", Price = 10.99, FoodImgUrl = "pizza.jpg" },
+                new Food { Id = 2, FoodName = "Burger", Price = 8.99, FoodImgUrl = "burger.jpg" }
                 // Add more foods as needed
-            };
+            );
 
-            modelBuilder.Entity<Food>().HasData(foods);
+            // Seed food ingredients
+            modelBuilder.Entity<FoodIngredient>().HasData(
+                new FoodIngredient { Id = 1, FoodId = 1, IngredientId = 1 },
+                new FoodIngredient { Id = 2, FoodId = 1, IngredientId = 2 }
+                // Associate ingredients with foods
+            );
 
-            // Seed ingredients
-            var ingredients = new List<Ingredient>
-            {
-                new Ingredient { Id = 1, IngredientName = "Cheese" },
-                new Ingredient { Id = 2, IngredientName = "Tomato Sauce" },
-                new Ingredient { Id = 3, IngredientName = "Pepperoni" },
-                new Ingredient { Id = 4, IngredientName = "Bun" },
-                new Ingredient { Id = 5, IngredientName = "Sausage" },
-                new Ingredient { Id = 6, IngredientName = "Lettuce" },
-                new Ingredient { Id = 7, IngredientName = "Tomato" },
-                new Ingredient { Id = 8, IngredientName = "Mayonnaise" },
-                // Add more ingredients as needed
-            };
+            // Seed users first
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Username = "User1", PasswordHash = null, PasswordSalt = null },
+                new User { Id = 2, Username = "User2", PasswordHash = null, PasswordSalt = null }
+            );
 
-            modelBuilder.Entity<Ingredient>().HasData(ingredients);
+            // Seed comments after users
+            modelBuilder.Entity<Comment>().HasData(
+                new Comment { Id = 1, userId = 1, Text = "Delicious pizza!", Rating = 4.5, Datetime = DateTime.Now },
+                new Comment { Id = 2, userId = 2, Text = "Great burger!", Rating = 5.0, Datetime = DateTime.Now }
+            );
 
-            var foodIngredients = new List<FoodIngredient>
-            {
-                new FoodIngredient { Id = 1, FoodId = 1, IngredientId = 1},
-                new FoodIngredient { Id = 2, FoodId = 1, IngredientId = 2},
-                new FoodIngredient { Id = 3, FoodId = 1, IngredientId = 3},
-                new FoodIngredient { Id = 4, FoodId = 2, IngredientId = 4},
-                new FoodIngredient { Id = 5, FoodId = 2, IngredientId = 5},
-                new FoodIngredient { Id = 6, FoodId = 3, IngredientId = 4},
-                new FoodIngredient { Id = 7, FoodId = 3, IngredientId = 6},
-                new FoodIngredient { Id = 8, FoodId = 3, IngredientId = 7},
-                new FoodIngredient { Id = 9, FoodId = 3, IngredientId = 8},
-                new FoodIngredient { Id = 10, FoodId = 4, IngredientId = 2},
-                new FoodIngredient { Id = 11, FoodId = 4, IngredientId = 6},
-                new FoodIngredient { Id = 12, FoodId = 4, IngredientId = 7},
-            };
 
-            modelBuilder.Entity<FoodIngredient>().HasData(foodIngredients);
+            // Seed carts
+            modelBuilder.Entity<Cart>().HasData(
+                new Cart { Id = 1, userId = 1, FoodId = 1 },
+                new Cart { Id = 2, userId = 2, FoodId = 2 }
+                // Add more carts as needed
+            );
+
+            // Add more seeding logic for other entities as needed
         }
-
     }
 }

@@ -12,20 +12,20 @@ namespace FoodFiestaApp.Controllers
     [ApiController]
     public class CustomerController : Controller
     {
-        private readonly ICustomerRepository _customerRepository;
+        private readonly IUserRepository _customerRepository;
         private readonly IMapper _mapper;
-        public CustomerController(ICustomerRepository customerRepository, IMapper mapper)
+        public CustomerController(IUserRepository customerRepository, IMapper mapper)
         {
             _customerRepository = customerRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<LoginCustomerDTO>))]
-        public IActionResult GetCustomers()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<UserDTO>))]
+        public IActionResult GetUsers()
         
         {
-            var allCustomers = _mapper.Map<List<LoginCustomerDTO>>(_customerRepository.GetCustomers());
+            var allCustomers = _mapper.Map<List<UserDTO>>(_customerRepository.GetUsers());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -33,14 +33,14 @@ namespace FoodFiestaApp.Controllers
         }
 
         [HttpGet("{Id}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<LoginCustomerDTO>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<UserDTO>))]
         [ProducesResponseType(400)]
-        public IActionResult GetCustomer(string Id)
+        public IActionResult GetUser(int Id)
         {
-            if (_customerRepository.GetCustomer(Id) is null)
+            if (_customerRepository.GetUser(Id) is null)
                 return NotFound();
 
-            var customer = _mapper.Map<LoginCustomerDTO>(_customerRepository.GetCustomer(Id));
+            var customer = _mapper.Map<UserDTO>(_customerRepository.GetUser(Id));
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -48,41 +48,27 @@ namespace FoodFiestaApp.Controllers
             return Ok(customer);
         }
 
-        [HttpPost]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(400)]
-        public IActionResult CreateCustomer([FromBody] RegisterCustomerDTO newCustomer)
-        {
-            if (newCustomer == null)
-            {
-                return BadRequest("RegisterCustomer object is null");
-            }
-
-            _customerRepository.CreateCustomer(newCustomer);
-
-            return Ok(newCustomer);
-        }
 
         [HttpPut("{customerId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateCustomer([FromBody] LoginCustomerDTO customerDto, string customerId)
+        public IActionResult UpdateUser([FromBody] User customerDto, int customerId)
         {
             if (customerDto == null || customerId != customerDto.Id)
                 return BadRequest(ModelState);
 
-            if (!_customerRepository.CustomerExists(customerId))
+            if (!_customerRepository.UserExists(customerId))
                 return NotFound();
 
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var customerMap = _mapper.Map<Customer>(customerDto);
+            var customerMap = _mapper.Map<User>(customerDto);
 
             try
             {
-                _customerRepository.UpdateCustomer(customerMap);
+                _customerRepository.UpdateUser(customerMap);
             }
             catch (Exception ex)
             {
@@ -95,14 +81,14 @@ namespace FoodFiestaApp.Controllers
         [HttpDelete("{customerId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
-        public IActionResult DeleteCustomer(string customerId)
+        public IActionResult DeleteUser(int customerId)
         {
-            if (!_customerRepository.CustomerExists(customerId))
+            if (!_customerRepository.UserExists(customerId))
             {
                 return NotFound();
             }
 
-            var singleCustomer = _customerRepository.GetCustomer(customerId);
+            var singleCustomer = _customerRepository.GetUser(customerId);
 
             if (!ModelState.IsValid)
             {
@@ -111,7 +97,7 @@ namespace FoodFiestaApp.Controllers
 
             try
             {
-                _customerRepository.DeleteCustomer(singleCustomer);
+                _customerRepository.DeleteUser(singleCustomer);
             }
             catch (Exception ex)
             {

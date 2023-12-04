@@ -28,7 +28,7 @@ namespace FoodFiestaApp.Repository
             {
                 var newComment = new Comment
                 {
-                    CustomerId = commentDto.CustomerId,
+                    userId = commentDto.UserId,
                     Text = commentDto.Text,
                     Rating = commentDto.Rating,
                 };

@@ -24,7 +24,7 @@ namespace FoodFiestaApp.Repository
             {
                 var newCart = new Cart
                 {
-                    CustomerId = cartDto.CustomerId,
+                    userId = cartDto.UserId,
                     FoodId = cartDto.FoodId,
                 };
 

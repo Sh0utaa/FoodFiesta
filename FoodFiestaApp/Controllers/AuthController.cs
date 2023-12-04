@@ -1,4 +1,5 @@
 ﻿using FoodFiestaApp.DTO;
+using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,9 +15,11 @@ namespace FoodFiestaApp.Controllers
     {
         public static User user = new User();
 
+        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _configuration = configuration;
         }
 
@@ -29,6 +32,7 @@ namespace FoodFiestaApp.Controllers
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
+            _userRepository.CreateUser(user);
             return Ok(user);
         }
 
@@ -67,7 +71,7 @@ namespace FoodFiestaApp.Controllers
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return string.Empty;
+            return jwt;
         }
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
