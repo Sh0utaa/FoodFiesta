@@ -29,6 +29,7 @@ namespace FoodFiestaApp.Controllers
             var user = new User()
             {
                 Username = request.Username,
+                Email = request.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
             };

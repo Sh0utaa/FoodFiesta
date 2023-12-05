@@ -121,8 +121,8 @@ namespace FoodFiestaApp.Data
 
             // Seed users first
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "User1", PasswordHash = null, PasswordSalt = null },
-                new User { Id = 2, Username = "User2", PasswordHash = null, PasswordSalt = null }
+                new User { Id = 1, Username = "User1", Email="emailExample@buzz.net" ,PasswordHash = null, PasswordSalt = null },
+                new User { Id = 2, Username = "User2", Email = "emailExample@buzz.net", PasswordHash = null, PasswordSalt = null }
             );
 
             // Seed comments after users

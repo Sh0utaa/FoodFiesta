@@ -44,6 +44,7 @@ namespace FoodFiestaApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
@@ -145,11 +146,11 @@ namespace FoodFiestaApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "PasswordHash", "PasswordSalt", "Username" },
+                columns: new[] { "Id", "Email", "PasswordHash", "PasswordSalt", "Username" },
                 values: new object[,]
                 {
-                    { 1, null, null, "User1" },
-                    { 2, null, null, "User2" }
+                    { 1, "emailExample@buzz.net", null, null, "User1" },
+                    { 2, "emailExample@buzz.net", null, null, "User2" }
                 });
 
             migrationBuilder.InsertData(
@@ -166,8 +167,8 @@ namespace FoodFiestaApp.Migrations
                 columns: new[] { "Id", "Datetime", "Rating", "Text", "userId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 12, 4, 23, 5, 1, 494, DateTimeKind.Local).AddTicks(4283), 4.5, "Delicious pizza!", 1 },
-                    { 2, new DateTime(2023, 12, 4, 23, 5, 1, 494, DateTimeKind.Local).AddTicks(4310), 5.0, "Great burger!", 2 }
+                    { 1, new DateTime(2023, 12, 5, 15, 6, 6, 677, DateTimeKind.Local).AddTicks(9364), 4.5, "Delicious pizza!", 1 },
+                    { 2, new DateTime(2023, 12, 5, 15, 6, 6, 677, DateTimeKind.Local).AddTicks(9380), 5.0, "Great burger!", 2 }
                 });
 
             migrationBuilder.InsertData(

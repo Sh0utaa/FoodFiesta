@@ -3,74 +3,71 @@
     Layout = "/Views/Shared/_AuthLayout.cshtml";
 }
 
-<html>
-    <body>
-        <form id="registerForm" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <!-- Replace the validation summary with a regular div -->
-            <div class="text-danger" role="alert" id="validationSummary"></div>
+<form id="registerForm" method="post">
+    <h2>Create a new account.</h2>
+    <hr />
+    <!-- Replace the validation summary with a regular div -->
+    <div class="text-danger" role="alert" id="validationSummary"></div>
         
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-floating mb-3">
-                        <input id="firstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="first name" />
-                        <label for="firstName">First Name</label>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-floating mb-3">
-                        <input id="lastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="last name" />
-                        <label for="lastName">Last Name</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-floating mb-3">
-                <input id="email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label for="email">Email</label>
-                <span id="emailValidation" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input id="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label for="password">Password</label>
-                <span id="passwordValidation" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input id="confirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label for="confirmPassword">Confirm Password</label>
-                <span id="confirmPasswordValidation" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="button" class="w-100 btn btn-lg btn-primary" onclick="submitForm()">Register</button>
-        </form>
+    <div class="form-floating mb-3">
+        <input id="username" class="form-control" autocomplete="email" aria-required="true" placeholder="user name" />
+        <label for="username">Username</label>
+        <span id="usernameValidation" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input id="email" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
+        <label for="email">Email</label>
+        <span id="emailValidation" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" id="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password" />
+        <label for="password">Password</label>
+        <span id="passwordValidation" class="text-danger"></span>
+    </div>
 
-        <script>
-            function submitForm() {
-                // Get values from the regular HTML inputs
-                var firstName = document.getElementById('firstName').value;
-                var lastName = document.getElementById('lastName').value;
-                var email = document.getElementById('email').value;
-                var password = document.getElementById('password').value;
-                var confirmPassword = document.getElementById('confirmPassword').value;
+    <button id="registerSubmit" type="button" class="w-100 btn btn-lg btn-primary" onclick="submitForm()">Register</button>
+</form>
 
-                // Perform any validation if needed
+<script>
+    function submitForm() {
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
 
-                // Simulate form submission or perform other actions
-                console.log("First Name: " + firstName);
-                console.log("Last Name: " + lastName);
-                console.log("Email: " + email);
-                console.log("Password: " + password);
-                console.log("Confirm Password: " + confirmPassword);
+        var data = {
+            username: username,
+            email: email,
+            password: password,
+        };
 
-                // Example: Show a message in the validation summary
-                var validationSummary = document.getElementById('validationSummary');
-                validationSummary.textContent = "Form submitted successfully!";
-                validationSummary.classList.remove('text-danger');
-                validationSummary.classList.add('text-success');
-            }
-        </script>
-    </body>
-</html
+        console.log(JSON.stringify(data));
+
+        fetch("https://localhost:7097/api/Auth/register", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Specify the content type as JSON
+            },
+            body: JSON.stringify(data) // Convert the data object to a JSON string
+        })
+            .then(response => {
+                // Handle the response from the server
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = 'https://localhost:7294/Account/Login'
+                return response.json(); // Assuming the server returns JSON, otherwise use text() or other methods
+            })
+            .then(data => {
+                // Handle the data returned by the server
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle errors that occurred during the fetch
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}>
+}

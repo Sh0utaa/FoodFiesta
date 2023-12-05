@@ -1,54 +1,73 @@
 ﻿@{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Login";
     Layout = "/Views/Shared/_AuthLayout.cshtml";
 }
 
-<div class="row justify-content-center">
-    <div class="col-10">
-        <section>
-            <div>
-                <h2>Welcome back!</h2>
-                <hr />
-                <!-- Replace the validation summary with a regular div -->
-                <div class="text-danger" role="alert" id="validationSummary"></div>
+<form id="registerForm" method="post">
+    <h2>Login</h2>
+    <hr />
+    <!-- Replace the validation summary with a regular div -->
+    <div class="text-danger" role="alert" id="validationSummary"></div>
 
-                <!-- Use regular HTML inputs -->
-                <div class="form-floating mb-3">
-                    <input id="email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label for="email" class="form-label">Email</label>
-                    <span id="emailValidation" class="text-danger"></span>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input id="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label for="password" class="form-label">Password</label>
-                    <span id="passwordValidation" class="text-danger"></span>
-                </div>
-
-                <!-- Use a regular button instead of a submit button -->
-                <div>
-                    <button id="login-submit" type="button" class="w-100 btn btn-lg btn-primary" onclick="submitForm()">Log in</button>
-                </div>
-            </div>
-        </section>
+    <div class="form-floating mb-3">
+        <input id="username" class="form-control" autocomplete="email" aria-required="true" placeholder="user name" />
+        <label for="username">Username</label>
+        <span id="usernameValidation" class="text-danger"></span>
     </div>
-</div>
+    <div class="form-floating mb-3">
+        <input id="email" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
+        <label for="email">Email</label>
+        <span id="emailValidation" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" id="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password" />
+        <label for="password">Password</label>
+        <span id="passwordValidation" class="text-danger"></span>
+    </div>
+
+    <button id="registerSubmit" type="button" class="w-100 btn btn-lg btn-primary" onclick="submitForm()">Login</button>
+</form>
+
+<script>
+    function submitForm() {
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        var data = {
+            username: username,
+            email: email,
+            password: password,
+        };
+
+        console.log(JSON.stringify(data));
+
+        fetch("https://localhost:7097/api/Auth/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Specify the content type as JSON
+            },
+            body: JSON.stringify(data) // Convert the data object to a JSON string
+        })
+            .then(response => {
+                // Handle the response from the server
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = 'https://localhost:7294/'
+                return response.text();
+            })
+            .then(data => {
+                localStorage.setItem('jwtToken', data);
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle errors that occurred during the fetch
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-<script>
-    function submitForm() {
-        // Get values from the regular HTML inputs
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-
-        // Perform any validation if needed
-
-        // Simulate form submission or perform other actions
-        console.log("Email: " + email);
-        console.log("Password: " + password);
-         
-    }
-</script>

@@ -90,7 +90,7 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
-                            Datetime = new DateTime(2023, 12, 4, 23, 5, 1, 494, DateTimeKind.Local).AddTicks(4283),
+                            Datetime = new DateTime(2023, 12, 5, 15, 6, 6, 677, DateTimeKind.Local).AddTicks(9364),
                             Rating = 4.5,
                             Text = "Delicious pizza!",
                             userId = 1
@@ -98,7 +98,7 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 2,
-                            Datetime = new DateTime(2023, 12, 4, 23, 5, 1, 494, DateTimeKind.Local).AddTicks(4310),
+                            Datetime = new DateTime(2023, 12, 5, 15, 6, 6, 677, DateTimeKind.Local).AddTicks(9380),
                             Rating = 5.0,
                             Text = "Great burger!",
                             userId = 2
@@ -216,6 +216,9 @@ namespace FoodFiestaApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
@@ -234,11 +237,13 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
+                            Email = "emailExample@buzz.net",
                             Username = "User1"
                         },
                         new
                         {
                             Id = 2,
+                            Email = "emailExample@buzz.net",
                             Username = "User2"
                         });
                 });
