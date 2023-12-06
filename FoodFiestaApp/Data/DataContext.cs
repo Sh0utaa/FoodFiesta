@@ -107,8 +107,8 @@ namespace FoodFiestaApp.Data
 
             // Seed foods
             modelBuilder.Entity<Food>().HasData(
-                new Food { Id = 1, FoodName = "Pizza", Price = 10.99, FoodImgUrl = "pizza.jpg" },
-                new Food { Id = 2, FoodName = "Burger", Price = 8.99, FoodImgUrl = "burger.jpg" }
+                new Food { Id = 1, FoodName = "Pizza", Price = 10.99, FilePath = null },
+                new Food { Id = 2, FoodName = "Burger", Price = 8.99, FilePath = null }
                 // Add more foods as needed
             );
 

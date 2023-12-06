@@ -35,7 +35,7 @@ namespace FoodFiestaApp.Repository
                 {
                     FoodName = foodDto.FoodName,
                     Price = foodDto.Price,
-                    FoodImgUrl = foodDto.FoodImgUrl
+                    FilePath = foodDto.FilePath
                 };
                 _context.Foods.Add(food);
                 _context.SaveChanges();
