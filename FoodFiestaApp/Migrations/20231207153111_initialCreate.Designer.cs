@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodFiestaApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231205110607_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231207153111_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,9 @@ namespace FoodFiestaApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("DrinkId")
+                        .HasColumnType("int");
+
                     b.Property<int>("FoodId")
                         .HasColumnType("int");
 
@@ -40,6 +43,8 @@ namespace FoodFiestaApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DrinkId");
 
                     b.HasIndex("FoodId");
 
@@ -51,12 +56,14 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
+                            DrinkId = 1,
                             FoodId = 1,
                             userId = 1
                         },
                         new
                         {
                             Id = 2,
+                            DrinkId = 2,
                             FoodId = 2,
                             userId = 2
                         });
@@ -92,18 +99,54 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
-                            Datetime = new DateTime(2023, 12, 5, 15, 6, 6, 677, DateTimeKind.Local).AddTicks(9364),
+                            Datetime = new DateTime(2023, 12, 7, 19, 31, 11, 178, DateTimeKind.Local).AddTicks(1618),
                             Rating = 4.5,
-                            Text = "Delicious pizza!",
+                            Text = "Comment from User1",
                             userId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Datetime = new DateTime(2023, 12, 5, 15, 6, 6, 677, DateTimeKind.Local).AddTicks(9380),
-                            Rating = 5.0,
-                            Text = "Great burger!",
+                            Datetime = new DateTime(2023, 12, 7, 19, 31, 11, 178, DateTimeKind.Local).AddTicks(1633),
+                            Rating = 3.0,
+                            Text = "Comment from User2",
                             userId = 2
+                        });
+                });
+
+            modelBuilder.Entity("FoodFiestaApp.Models.Drink", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Drinks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Drink1",
+                            Price = 5.9900000000000002
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Drink2",
+                            Price = 3.75
                         });
                 });
 
@@ -115,10 +158,10 @@ namespace FoodFiestaApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("FoodImgUrl")
+                    b.Property<string>("FoodName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FoodName")
+                    b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("Price")
@@ -132,81 +175,14 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
-                            FoodImgUrl = "pizza.jpg",
-                            FoodName = "Pizza",
+                            FoodName = "Food1",
                             Price = 10.99
                         },
                         new
                         {
                             Id = 2,
-                            FoodImgUrl = "burger.jpg",
-                            FoodName = "Burger",
-                            Price = 8.9900000000000002
-                        });
-                });
-
-            modelBuilder.Entity("FoodFiestaApp.Models.FoodIngredient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("FoodId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IngredientId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FoodId");
-
-                    b.HasIndex("IngredientId");
-
-                    b.ToTable("FoodIngredients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FoodId = 1,
-                            IngredientId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FoodId = 1,
-                            IngredientId = 2
-                        });
-                });
-
-            modelBuilder.Entity("FoodFiestaApp.Models.Ingredient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("IngredientName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Ingredients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IngredientName = "Salt"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IngredientName = "Pepper"
+                            FoodName = "Food2",
+                            Price = 8.5
                         });
                 });
 
@@ -239,19 +215,25 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "emailExample@buzz.net",
+                            Email = "user1@example.com",
                             Username = "User1"
                         },
                         new
                         {
                             Id = 2,
-                            Email = "emailExample@buzz.net",
+                            Email = "user2@example.com",
                             Username = "User2"
                         });
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.Cart", b =>
                 {
+                    b.HasOne("FoodFiestaApp.Models.Drink", "Drink")
+                        .WithMany("Cart")
+                        .HasForeignKey("DrinkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FoodFiestaApp.Models.Food", "Food")
                         .WithMany("Cart")
                         .HasForeignKey("FoodId")
@@ -264,6 +246,8 @@ namespace FoodFiestaApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Drink");
+
                     b.Navigation("Food");
 
                     b.Navigation("User");
@@ -273,40 +257,20 @@ namespace FoodFiestaApp.Migrations
                 {
                     b.HasOne("FoodFiestaApp.Models.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("userId");
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FoodFiestaApp.Models.FoodIngredient", b =>
+            modelBuilder.Entity("FoodFiestaApp.Models.Drink", b =>
                 {
-                    b.HasOne("FoodFiestaApp.Models.Food", "Food")
-                        .WithMany("FoodIngredientTable")
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FoodFiestaApp.Models.Ingredient", "Ingredient")
-                        .WithMany("FoodIngredientTable")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Food");
-
-                    b.Navigation("Ingredient");
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.Food", b =>
                 {
                     b.Navigation("Cart");
-
-                    b.Navigation("FoodIngredientTable");
-                });
-
-            modelBuilder.Entity("FoodFiestaApp.Models.Ingredient", b =>
-                {
-                    b.Navigation("FoodIngredientTable");
                 });
 
             modelBuilder.Entity("FoodFiestaApp.Models.User", b =>

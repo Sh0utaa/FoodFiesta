@@ -11,6 +11,6 @@ namespace FoodFiestaApp.Interfaces
         Food GetFood(string name);
         void CreateFood(FoodDto foodDto);
         void UpdateFood(Food foodObject);
-        void DeleteFood(Food foodObject);
+        void DeleteFood(int Id);
     }
 }

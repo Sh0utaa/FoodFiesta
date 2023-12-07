@@ -5,10 +5,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodFiestaApp.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Drinks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: true),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drinks", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Foods",
                 columns: table => new
@@ -17,24 +32,11 @@ namespace FoodFiestaApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FoodName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: true),
-                    FoodImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Foods", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Ingredients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IngredientName = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,43 +56,24 @@ namespace FoodFiestaApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FoodIngredients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FoodId = table.Column<int>(type: "int", nullable: false),
-                    IngredientId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FoodIngredients", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FoodIngredients_Foods_FoodId",
-                        column: x => x.FoodId,
-                        principalTable: "Foods",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FoodIngredients_Ingredients_IngredientId",
-                        column: x => x.IngredientId,
-                        principalTable: "Ingredients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     userId = table.Column<int>(type: "int", nullable: false),
-                    FoodId = table.Column<int>(type: "int", nullable: false)
+                    FoodId = table.Column<int>(type: "int", nullable: false),
+                    DrinkId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Carts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Carts_Drinks_DrinkId",
+                        column: x => x.DrinkId,
+                        principalTable: "Drinks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Carts_Foods_FoodId",
                         column: x => x.FoodId,
@@ -123,25 +106,26 @@ namespace FoodFiestaApp.Migrations
                         name: "FK_Comments_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Drinks",
+                columns: new[] { "Id", "ImgPath", "Name", "Price" },
+                values: new object[,]
+                {
+                    { 1, null, "Drink1", 5.9900000000000002 },
+                    { 2, null, "Drink2", 3.75 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Foods",
-                columns: new[] { "Id", "FoodImgUrl", "FoodName", "Price" },
+                columns: new[] { "Id", "FoodName", "ImgPath", "Price" },
                 values: new object[,]
                 {
-                    { 1, "pizza.jpg", "Pizza", 10.99 },
-                    { 2, "burger.jpg", "Burger", 8.9900000000000002 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Ingredients",
-                columns: new[] { "Id", "IngredientName" },
-                values: new object[,]
-                {
-                    { 1, "Salt" },
-                    { 2, "Pepper" }
+                    { 1, "Food1", null, 10.99 },
+                    { 2, "Food2", null, 8.5 }
                 });
 
             migrationBuilder.InsertData(
@@ -149,17 +133,17 @@ namespace FoodFiestaApp.Migrations
                 columns: new[] { "Id", "Email", "PasswordHash", "PasswordSalt", "Username" },
                 values: new object[,]
                 {
-                    { 1, "emailExample@buzz.net", null, null, "User1" },
-                    { 2, "emailExample@buzz.net", null, null, "User2" }
+                    { 1, "user1@example.com", null, null, "User1" },
+                    { 2, "user2@example.com", null, null, "User2" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Carts",
-                columns: new[] { "Id", "FoodId", "userId" },
+                columns: new[] { "Id", "DrinkId", "FoodId", "userId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1 },
-                    { 2, 2, 2 }
+                    { 1, 1, 1, 1 },
+                    { 2, 2, 2, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -167,18 +151,14 @@ namespace FoodFiestaApp.Migrations
                 columns: new[] { "Id", "Datetime", "Rating", "Text", "userId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 12, 5, 15, 6, 6, 677, DateTimeKind.Local).AddTicks(9364), 4.5, "Delicious pizza!", 1 },
-                    { 2, new DateTime(2023, 12, 5, 15, 6, 6, 677, DateTimeKind.Local).AddTicks(9380), 5.0, "Great burger!", 2 }
+                    { 1, new DateTime(2023, 12, 7, 19, 31, 11, 178, DateTimeKind.Local).AddTicks(1618), 4.5, "Comment from User1", 1 },
+                    { 2, new DateTime(2023, 12, 7, 19, 31, 11, 178, DateTimeKind.Local).AddTicks(1633), 3.0, "Comment from User2", 2 }
                 });
 
-            migrationBuilder.InsertData(
-                table: "FoodIngredients",
-                columns: new[] { "Id", "FoodId", "IngredientId" },
-                values: new object[,]
-                {
-                    { 1, 1, 1 },
-                    { 2, 1, 2 }
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Carts_DrinkId",
+                table: "Carts",
+                column: "DrinkId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_FoodId",
@@ -194,16 +174,6 @@ namespace FoodFiestaApp.Migrations
                 name: "IX_Comments_userId",
                 table: "Comments",
                 column: "userId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FoodIngredients_FoodId",
-                table: "FoodIngredients",
-                column: "FoodId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FoodIngredients_IngredientId",
-                table: "FoodIngredients",
-                column: "IngredientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -215,16 +185,13 @@ namespace FoodFiestaApp.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "FoodIngredients");
-
-            migrationBuilder.DropTable(
-                name: "Users");
+                name: "Drinks");
 
             migrationBuilder.DropTable(
                 name: "Foods");
 
             migrationBuilder.DropTable(
-                name: "Ingredients");
+                name: "Users");
         }
     }
 }

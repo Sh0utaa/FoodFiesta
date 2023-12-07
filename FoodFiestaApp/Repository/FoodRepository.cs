@@ -35,7 +35,6 @@ namespace FoodFiestaApp.Repository
                 {
                     FoodName = foodDto.FoodName,
                     Price = foodDto.Price,
-                    FilePath = foodDto.FilePath
                 };
                 _context.Foods.Add(food);
                 _context.SaveChanges();
@@ -50,7 +49,7 @@ namespace FoodFiestaApp.Repository
         {
             try
             {
-                _context.Update(foodObject);
+                _context.Foods.Update(foodObject);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -64,14 +63,18 @@ namespace FoodFiestaApp.Repository
             return _context.Foods.Any(f => f.Id == id);
         }
 
-        public void DeleteFood(Food foodObject)
+        public void DeleteFood(int Id)
         {
-            // Remove references from FoodIngredients
-            var foodIngredients = _context.FoodIngredients.Where(fi => fi.FoodId == foodObject.Id);
-            _context.FoodIngredients.RemoveRange(foodIngredients);
-
-            _context.Remove(foodObject);
-            _context.SaveChanges();
+            var foodObject = _context.Foods.Where(x => x.Id == Id).FirstOrDefault();
+            if(foodObject is null)
+            {
+                throw new Exception();
+            }
+            else
+            {
+                _context.Foods.Remove(foodObject);
+                _context.SaveChanges();
+            }
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿namespace FoodFiestaApp.Models
 {
-    public class Food
+    public class Drink
     {
-        public int Id { get; set; }
-        public string? FoodName { get; set; }
+        public int? Id { get; set; }
+        public string? Name { get; set; }
         public double? Price { get; set; }
         public string? ImgPath { get; set; }
 
-        // Make the navigation properties optional
         public ICollection<Cart>? Cart { get; set; }
+
     }
 }

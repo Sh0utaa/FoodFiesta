@@ -12,8 +12,7 @@ namespace FoodFiestaApp.Helper
             CreateMap<Comment, CommentDto>().ReverseMap();
             CreateMap<Cart, CartDto>().ReverseMap();
             CreateMap<Food, FoodDto>().ReverseMap();
-            CreateMap<FoodIngredient, FoodIngredientDto>().ReverseMap();
-            CreateMap<Ingredient, IngredientDto>().ReverseMap();
+            CreateMap<Drink, DrinkDto>().ReverseMap();
         }
     }
 }

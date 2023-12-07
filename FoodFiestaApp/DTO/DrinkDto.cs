@@ -1,8 +1,8 @@
 ﻿namespace FoodFiestaApp.DTO
 {
-    public class FoodDto
+    public class DrinkDto
     {
-        public string? FoodName { get; set; }
+        public string? Name { get; set; }
         public double? Price { get; set; }
     }
 }
