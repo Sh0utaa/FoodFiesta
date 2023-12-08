@@ -42,7 +42,7 @@
                         <div class="card-body">
                             <h5 class="card-title">${food.foodName}</h5>
                             <p class="card-text">Price: $${food.price}</p>
-                                <p class="card-text">Id: ${food.id}</p>
+                            <button class="btn btn-primary" onclick="addToCart(${food.id})">Add To Cart</button>
                             </div>
                     `;
 
@@ -90,6 +90,11 @@
                 console.error('Fetch error:', error);
             });
     }
+    
+    function addToCart(id) {
+        console.log(id)
+    }
+    
     document.addEventListener("DOMContentLoaded", () => {
         const Container = document.getElementById('foodContainer');
         Container.innerHTML = '';

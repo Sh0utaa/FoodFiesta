@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodFiestaApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231207153111_initialCreate")]
-    partial class initialCreate
+    [Migration("20231208181214_initialcreat")]
+    partial class initialcreat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,7 +99,7 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
-                            Datetime = new DateTime(2023, 12, 7, 19, 31, 11, 178, DateTimeKind.Local).AddTicks(1618),
+                            Datetime = new DateTime(2023, 12, 8, 22, 12, 14, 82, DateTimeKind.Local).AddTicks(6735),
                             Rating = 4.5,
                             Text = "Comment from User1",
                             userId = 1
@@ -107,7 +107,7 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 2,
-                            Datetime = new DateTime(2023, 12, 7, 19, 31, 11, 178, DateTimeKind.Local).AddTicks(1633),
+                            Datetime = new DateTime(2023, 12, 8, 22, 12, 14, 82, DateTimeKind.Local).AddTicks(6758),
                             Rating = 3.0,
                             Text = "Comment from User2",
                             userId = 2
@@ -175,14 +175,72 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
-                            FoodName = "Food1",
+                            FoodName = "Pizza",
+                            ImgPath = "FoodFiestaApp/Images",
                             Price = 10.99
                         },
                         new
                         {
                             Id = 2,
-                            FoodName = "Food2",
-                            Price = 8.5
+                            FoodName = "Pasta",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FoodName = "Burger",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FoodName = "Steak",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FoodName = "Ramen",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FoodName = "Shawarma",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FoodName = "Sushi",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FoodName = "Cheesecake",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FoodName = "Ceasar Salad",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FoodName = "Mwvadi",
+                            ImgPath = "FoodFiestaApp/Images",
+                            Price = 10.99
                         });
                 });
 

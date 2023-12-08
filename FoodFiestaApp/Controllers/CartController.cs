@@ -2,6 +2,7 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
@@ -29,7 +30,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(allCarts);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult CreateCart([FromBody] CartDto cartDto)

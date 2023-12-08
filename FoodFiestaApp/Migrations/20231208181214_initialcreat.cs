@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoodFiestaApp.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class initialcreat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -124,8 +124,16 @@ namespace FoodFiestaApp.Migrations
                 columns: new[] { "Id", "FoodName", "ImgPath", "Price" },
                 values: new object[,]
                 {
-                    { 1, "Food1", null, 10.99 },
-                    { 2, "Food2", null, 8.5 }
+                    { 1, "Pizza", "FoodFiestaApp/Images", 10.99 },
+                    { 2, "Pasta", "FoodFiestaApp/Images", 10.99 },
+                    { 3, "Burger", "FoodFiestaApp/Images", 10.99 },
+                    { 4, "Steak", "FoodFiestaApp/Images", 10.99 },
+                    { 5, "Ramen", "FoodFiestaApp/Images", 10.99 },
+                    { 6, "Shawarma", "FoodFiestaApp/Images", 10.99 },
+                    { 7, "Sushi", "FoodFiestaApp/Images", 10.99 },
+                    { 8, "Cheesecake", "FoodFiestaApp/Images", 10.99 },
+                    { 9, "Ceasar Salad", "FoodFiestaApp/Images", 10.99 },
+                    { 10, "Mwvadi", "FoodFiestaApp/Images", 10.99 }
                 });
 
             migrationBuilder.InsertData(
@@ -151,8 +159,8 @@ namespace FoodFiestaApp.Migrations
                 columns: new[] { "Id", "Datetime", "Rating", "Text", "userId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 12, 7, 19, 31, 11, 178, DateTimeKind.Local).AddTicks(1618), 4.5, "Comment from User1", 1 },
-                    { 2, new DateTime(2023, 12, 7, 19, 31, 11, 178, DateTimeKind.Local).AddTicks(1633), 3.0, "Comment from User2", 2 }
+                    { 1, new DateTime(2023, 12, 8, 22, 12, 14, 82, DateTimeKind.Local).AddTicks(6735), 4.5, "Comment from User1", 1 },
+                    { 2, new DateTime(2023, 12, 8, 22, 12, 14, 82, DateTimeKind.Local).AddTicks(6758), 3.0, "Comment from User2", 2 }
                 });
 
             migrationBuilder.CreateIndex(
