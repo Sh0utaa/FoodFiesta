@@ -7,7 +7,6 @@
         public double? Price { get; set; }
         public string? ImgPath { get; set; }
 
-        // Make the navigation properties optional
         public ICollection<Cart>? Cart { get; set; }
     }
 }

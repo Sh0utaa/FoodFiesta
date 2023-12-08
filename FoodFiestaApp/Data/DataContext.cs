@@ -61,8 +61,16 @@ namespace FoodFiestaApp.Data
 
             // Seed Foods
             modelBuilder.Entity<Food>().HasData(
-                new Food { Id = 1, FoodName = "Food1", Price = 10.99 },
-                new Food { Id = 2, FoodName = "Food2", Price = 8.50 }
+                new Food { Id = 1, FoodName = "Pizza", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 2, FoodName = "Pasta", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 3, FoodName = "Burger", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 4, FoodName = "Steak", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 5, FoodName = "Ramen", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 6, FoodName = "Shawarma", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 7, FoodName = "Sushi", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 8, FoodName = "Cheesecake", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 9, FoodName = "Ceasar Salad", Price = 10.99, ImgPath = "FoodFiestaApp/Images" },
+                new Food { Id = 10, FoodName = "Mwvadi", Price = 10.99, ImgPath = "FoodFiestaApp/Images" }
                 // Add more foods as needed
             );
 
