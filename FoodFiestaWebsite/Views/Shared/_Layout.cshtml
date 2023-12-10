@@ -1,7 +1,23 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var userId = "temp";
+}
+
+<!DOCTYPE html>
 <html>
 
 <head>
+    <script>
+        var storedUserId = localStorage.getItem("userId");
+
+        userId = storedUserId ?? defaultValue;
+
+        function logout() {
+            localStorage.clear();
+            location.reload(true);
+        }
+    </script>
+
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FoodFiestaWebsite</title>
@@ -64,10 +80,19 @@
                     </li>
                 </ul>
                 <div class="user_option">
-                    <a asp-controller="Account" asp-action="Login" class="user_link">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                    </a>
-                    <a class="cart_link" href="#">
+                    @if (!string.IsNullOrEmpty(userId))
+                    {
+                        <a class="user_link" onclick="logout()">
+                            LOGOUT
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="user_link" asp-controller="Account" asp-action="Login">
+                            <i class="fa fa-user"></i>
+                        </a>
+                    }                    
+                    <a class="cart_link" asp-controller="Menu" asp-action="Cart">
                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                         <g>
                         <g>

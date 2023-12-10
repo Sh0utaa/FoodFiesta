@@ -58,8 +58,14 @@
                 return response.text();
             })
             .then(data => {
-                localStorage.setItem('jwtToken', data);
-                console.log(data);
+                var parsedData = JSON.parse(data);
+
+                var userId = parsedData.userId;
+                var token = parsedData.token;
+
+                // You can also store them in localStorage if needed
+                localStorage.setItem('userId', userId);
+                localStorage.setItem('jwtToken', token);
             })
             .catch(error => {
                 // Handle errors that occurred during the fetch

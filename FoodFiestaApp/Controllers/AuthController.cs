@@ -1,4 +1,5 @@
-﻿using FoodFiestaApp.DTO;
+﻿using AutoMapper;
+using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace FoodFiestaApp.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
-        public AuthController(IConfiguration configuration, IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public AuthController(IConfiguration configuration, IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -26,13 +29,7 @@ namespace FoodFiestaApp.Controllers
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            var user = new User()
-            {
-                Username = request.Username,
-                Email = request.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-            };
+            var user = _mapper.Map<User>(request);
 
             _userRepository.CreateUser(user);
             return Ok(user);
@@ -51,9 +48,15 @@ namespace FoodFiestaApp.Controllers
             {
                 return BadRequest("Wrong pasword.");
             }
-
             string token = CreateToken(user);
-            return Ok(token);
+
+            var data = new UserWithTokenDTO()
+            {
+                UserId = user.Id,
+                Token = token
+            };
+
+            return Ok(data);
         }
         private string CreateToken(User user)
         {
