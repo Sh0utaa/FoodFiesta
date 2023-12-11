@@ -30,6 +30,8 @@ namespace FoodFiestaApp.Controllers
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             var user = _mapper.Map<User>(request);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
 
             _userRepository.CreateUser(user);
             return Ok(user);

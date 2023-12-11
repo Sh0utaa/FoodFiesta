@@ -26,7 +26,6 @@ namespace FoodFiestaApp.Repository
                 {
                     userId = cartDto.UserId,
                     FoodId = cartDto.FoodId,
-                    DrinkId = cartDto.DrinkId,
                 };
 
                 _context.Add(newCart);
