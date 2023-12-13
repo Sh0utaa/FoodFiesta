@@ -1123,8 +1123,27 @@
 
 
 <script>
-    @* document.addEventListener('DOMContentLoaded', function () {
-        const jwtToken = localStorage.getItem('jwtToken');
-        if (jwtToken === null) window.location.href = 'https://localhost:7294/Account/Login'
-    }); *@
+document.addEventListener("DOMContentLoaded", () => {
+    var id = 1;
+        fetch(`https://localhost:7097/api/carts/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                // Handle the cart item data (e.g., update the UI with cart item details)
+            })
+            .catch(error => {
+                // Handle errors (e.g., show an error message to the user)
+                console.error('Fetch error:', error);
+            });
+})
 </script>

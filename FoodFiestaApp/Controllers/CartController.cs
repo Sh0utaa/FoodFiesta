@@ -30,6 +30,24 @@ namespace FoodFiestaApp.Controllers
             return Ok(allCarts);
         }
 
+        [HttpGet("{cartId}")]
+        [ProducesResponseType(200, Type = typeof(CartDto))]
+        [ProducesResponseType(404)]
+        public IActionResult GetCart(int cartId)
+        {
+            var cart = _cartRepository.GetCart(cartId);
+
+            if (cart == null)
+            {
+                return NotFound(); 
+            }
+
+            var cartDto = _mapper.Map<CartDto>(cart);
+
+            return Ok(cartDto);
+        }
+
+
         [HttpPost, Authorize]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
