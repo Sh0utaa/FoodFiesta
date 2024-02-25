@@ -2,11 +2,12 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
 {
-    [Route("api/Foods")]
+    [Route("api/Foods"), Authorize]
     [ApiController]
     public class FoodController : Controller
     {
@@ -17,16 +18,16 @@ namespace FoodFiestaApp.Controllers
             _foodRepository = foodRepository;
             _mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet, Authorize]
         [ProducesResponseType(200, Type = typeof(FoodDto))]
         public IActionResult GetFood()
         {
-            var allFood =  _mapper.Map<List<FoodDto>>(_foodRepository.GetFood());
-            if(!ModelState.IsValid) return BadRequest(ModelState);
+            var allFood = _mapper.Map<List<FoodDto>>(_foodRepository.GetFood());
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             return Ok(allFood);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}"), Authorize]
         [ProducesResponseType(200, Type = typeof(FoodDto))]
         [ProducesResponseType(400)]
         public IActionResult GetFoodById(int Id)
@@ -41,7 +42,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(singleFood);
         }
 
-        [HttpGet("byName/{foodName}")]
+        [HttpGet("byName/{foodName}"), Authorize]
         [ProducesResponseType(200, Type = typeof(FoodDto))]
         [ProducesResponseType(400)]
         public IActionResult GetFood(string foodName)
@@ -56,7 +57,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(singleFood);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult CreateFood([FromBody] FoodDto food)
@@ -70,7 +71,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(food);
         }
 
-        [HttpPut("{foodId}")]
+        [HttpPut("{foodId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -96,7 +97,7 @@ namespace FoodFiestaApp.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{foodId}")]
+        [HttpDelete("{foodId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public IActionResult DeleteFood(int foodId)

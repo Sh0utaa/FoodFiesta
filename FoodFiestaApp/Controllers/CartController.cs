@@ -19,7 +19,7 @@ namespace FoodFiestaApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         [ProducesResponseType(200, Type = typeof(CartDto))]
         public IActionResult GetCarts()
         {
@@ -30,7 +30,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(allCarts);
         }
 
-        [HttpGet("{cartId}")]
+        [HttpGet("{cartId}"), Authorize]
         [ProducesResponseType(200, Type = typeof(CartDto))]
         [ProducesResponseType(404)]
         public IActionResult GetCart(int cartId)
@@ -62,7 +62,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(cartDto);
         }
 
-        [HttpPut("{cartId}")]
+        [HttpPut("{cartId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -91,7 +91,7 @@ namespace FoodFiestaApp.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{cartId}")]
+        [HttpDelete("{cartId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public IActionResult DeleteCart(int cartId)

@@ -2,6 +2,7 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
@@ -18,7 +19,7 @@ namespace FoodFiestaApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Comment>))]
         public IActionResult GetComments()
         {
@@ -30,7 +31,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(allComments);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}"), Authorize]
         [ProducesResponseType(200, Type = typeof(Comment))]
         [ProducesResponseType(400)]
         public IActionResult GetComment(int Id)
@@ -46,7 +47,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(singleComment);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult CreateComment([FromBody] CommentDto commentDto)
@@ -61,7 +62,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(commentDto);
         }
 
-        [HttpPut("{commentId}")]
+        [HttpPut("{commentId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -90,7 +91,7 @@ namespace FoodFiestaApp.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{commentId}")]
+        [HttpDelete("{commentId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public IActionResult DeleteComment(int commentId)

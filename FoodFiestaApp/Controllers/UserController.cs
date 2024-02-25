@@ -21,7 +21,6 @@ namespace FoodFiestaApp.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<UserDTO>))]
         public IActionResult GetUsers()
-        
         {
             var allCustomers = _customerRepository.GetUsers();
 
