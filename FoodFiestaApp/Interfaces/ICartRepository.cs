@@ -6,6 +6,7 @@ namespace FoodFiestaApp.Interfaces
     public interface ICartRepository
     {
         ICollection<Cart> GetAllCarts();
+        ICollection<Cart> GetUsersCarts(int userId);
         Cart GetCart(int id);
         bool CartExists(int id);
         void CreateCart(CartDto cartDto);

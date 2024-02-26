@@ -4,6 +4,7 @@ using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FoodFiestaApp.Controllers
 {
@@ -19,7 +20,7 @@ namespace FoodFiestaApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         [ProducesResponseType(200, Type = typeof(CartDto))]
         public IActionResult GetCarts()
         {
@@ -30,19 +31,22 @@ namespace FoodFiestaApp.Controllers
             return Ok(allCarts);
         }
 
-        [HttpGet("{cartId}"), Authorize]
+        [HttpGet("{userId}"), Authorize]
         [ProducesResponseType(200, Type = typeof(CartDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetCart(int cartId)
+        public IActionResult GetCart(int userId)
         {
-            var cart = _cartRepository.GetCart(cartId);
+            string userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (userId != int.Parse(userIdClaim)) { return BadRequest("Forbidden"); }
+
+            var cart = _cartRepository.GetUsersCarts(userId);
 
             if (cart == null)
             {
                 return NotFound(); 
             }
 
-            var cartDto = _mapper.Map<CartDto>(cart);
+            var cartDto = _mapper.Map<List<CartDto>>(cart);
 
             return Ok(cartDto);
         }
@@ -53,6 +57,9 @@ namespace FoodFiestaApp.Controllers
         [ProducesResponseType(400)]
         public IActionResult CreateCart([FromBody] CartDto cartDto)
         {
+            string userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if(cartDto.UserId != int.Parse(userIdClaim)) { return BadRequest("Forbidden"); }
+
             if (cartDto == null)
             {
                 return BadRequest("Cart object is null");
@@ -62,16 +69,18 @@ namespace FoodFiestaApp.Controllers
             return Ok(cartDto);
         }
 
-        [HttpPut("{cartId}"), Authorize]
+        [HttpPut]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateCart([FromBody] CartDto cartDto, int cartId)
+        public IActionResult UpdateCart([FromBody] CartDto cartDto)
         {
-            if (cartDto == null || cartId != cartDto.Id)
+            string userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if(cartDto.UserId != int.Parse(userIdClaim)) { return BadRequest("Forbidden"); }
+            if (cartDto == null)
                 return BadRequest(ModelState);
 
-            if (!_cartRepository.CartExists(cartId))
+            if (!_cartRepository.CartExists(cartDto.Id))
                 return NotFound();
 
             if (!ModelState.IsValid)
@@ -96,12 +105,19 @@ namespace FoodFiestaApp.Controllers
         [ProducesResponseType(204)]
         public IActionResult DeleteCart(int cartId)
         {
+            string userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            
             if (!_cartRepository.CartExists(cartId))
             {
                 return NotFound();
             }
 
             var singleCart = _cartRepository.GetCart(cartId);
+
+            if(singleCart.userId != int.Parse(userIdClaim))
+            {
+                return BadRequest("Forbidden");
+            }
 
             if (!ModelState.IsValid)
             {

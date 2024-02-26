@@ -57,7 +57,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(singleFood);
         }
 
-        [HttpPost, Authorize]
+        [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult CreateFood([FromBody] FoodDto food)
@@ -71,7 +71,7 @@ namespace FoodFiestaApp.Controllers
             return Ok(food);
         }
 
-        [HttpPut("{foodId}"), Authorize]
+        [HttpPut("{foodId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -97,7 +97,7 @@ namespace FoodFiestaApp.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{foodId}"), Authorize]
+        [HttpDelete("{foodId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public IActionResult DeleteFood(int foodId)
