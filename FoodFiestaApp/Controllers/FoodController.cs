@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodFiestaApp.Controllers
 {
-    [Route("api/Foods"), Authorize]
+    [Route("api/Foods")]
     [ApiController]
     public class FoodController : Controller
     {
@@ -32,7 +32,7 @@ namespace FoodFiestaApp.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetFoodById(int Id)
         {
-            if (_foodRepository.GetFoodById(Id) is null)   return NotFound();
+            if (_foodRepository.GetFoodById(Id) is null) return NotFound();
 
             var singleFood = _mapper.Map<FoodDto>(_foodRepository.GetFoodById(Id));
 
@@ -75,7 +75,7 @@ namespace FoodFiestaApp.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateFood([FromBody] FoodDto updatedFood,int foodId)
+        public IActionResult UpdateFood([FromBody] FoodDto updatedFood, int foodId)
         {
             if (!_foodRepository.FoodExists(foodId))
                 return NotFound();
