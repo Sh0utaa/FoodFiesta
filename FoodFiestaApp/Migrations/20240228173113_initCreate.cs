@@ -31,6 +31,7 @@ namespace FoodFiestaApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Admin = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
@@ -106,11 +107,11 @@ namespace FoodFiestaApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Email", "PasswordHash", "PasswordSalt", "Username" },
+                columns: new[] { "Id", "Admin", "Email", "PasswordHash", "PasswordSalt", "Username" },
                 values: new object[,]
                 {
-                    { 1, "user1@example.com", null, null, "User1" },
-                    { 2, "user2@example.com", null, null, "User2" }
+                    { 1, false, "user1@example.com", null, null, "User1" },
+                    { 2, false, "user2@example.com", null, null, "User2" }
                 });
 
             migrationBuilder.InsertData(
@@ -127,8 +128,8 @@ namespace FoodFiestaApp.Migrations
                 columns: new[] { "Id", "Datetime", "Rating", "Text", "userId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 12, 11, 17, 36, 26, 530, DateTimeKind.Local).AddTicks(3419), 4.5, "Comment from User1", 1 },
-                    { 2, new DateTime(2023, 12, 11, 17, 36, 26, 530, DateTimeKind.Local).AddTicks(3440), 3.0, "Comment from User2", 2 }
+                    { 1, new DateTime(2024, 2, 28, 21, 31, 12, 672, DateTimeKind.Local).AddTicks(6985), 4.5, "Comment from User1", 1 },
+                    { 2, new DateTime(2024, 2, 28, 21, 31, 12, 672, DateTimeKind.Local).AddTicks(6999), 3.0, "Comment from User2", 2 }
                 });
 
             migrationBuilder.CreateIndex(

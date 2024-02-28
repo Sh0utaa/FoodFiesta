@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodFiestaApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231211133627_initCreate")]
+    [Migration("20240228173113_initCreate")]
     partial class initCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,7 +91,7 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
-                            Datetime = new DateTime(2023, 12, 11, 17, 36, 26, 530, DateTimeKind.Local).AddTicks(3419),
+                            Datetime = new DateTime(2024, 2, 28, 21, 31, 12, 672, DateTimeKind.Local).AddTicks(6985),
                             Rating = 4.5,
                             Text = "Comment from User1",
                             userId = 1
@@ -99,7 +99,7 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 2,
-                            Datetime = new DateTime(2023, 12, 11, 17, 36, 26, 530, DateTimeKind.Local).AddTicks(3440),
+                            Datetime = new DateTime(2024, 2, 28, 21, 31, 12, 672, DateTimeKind.Local).AddTicks(6999),
                             Rating = 3.0,
                             Text = "Comment from User2",
                             userId = 2
@@ -195,6 +195,9 @@ namespace FoodFiestaApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -216,12 +219,14 @@ namespace FoodFiestaApp.Migrations
                         new
                         {
                             Id = 1,
+                            Admin = false,
                             Email = "user1@example.com",
                             Username = "User1"
                         },
                         new
                         {
                             Id = 2,
+                            Admin = false,
                             Email = "user2@example.com",
                             Username = "User2"
                         });

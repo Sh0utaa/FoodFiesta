@@ -44,8 +44,8 @@ namespace FoodFiestaApp.Data
         {
             // Seed Users
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "User1", Email = "user1@example.com" },
-                new User { Id = 2, Username = "User2", Email = "user2@example.com" }
+                new User { Id = 1, Username = "User1", Email = "user1@example.com", Admin = false },
+                new User { Id = 2, Username = "User2", Email = "user2@example.com", Admin = false }
                 // Add more users as needed
             );
 

@@ -20,10 +20,15 @@ namespace FoodFiestaApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         [ProducesResponseType(200, Type = typeof(CartDto))]
         public IActionResult GetCarts()
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True") 
+            { 
+                return BadRequest("User is not authenticated."); 
+            }
             var allCarts = _mapper.Map<List<CartDto>>(_cartRepository.GetAllCarts());
             if (allCarts is null) return NotFound();
             if (!ModelState.IsValid) return BadRequest();
@@ -69,12 +74,18 @@ namespace FoodFiestaApp.Controllers
             return Ok(cartDto);
         }
 
-        [HttpPut]
+        [HttpPut, Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public IActionResult UpdateCart([FromBody] CartDto cartDto)
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True")
+            {
+                return BadRequest("User is not authenticated.");
+            }
+
             string userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if(cartDto.UserId != int.Parse(userIdClaim)) { return BadRequest("Forbidden"); }
             if (cartDto == null)

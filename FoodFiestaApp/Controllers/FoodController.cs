@@ -4,6 +4,7 @@ using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FoodFiestaApp.Controllers
 {
@@ -57,11 +58,16 @@ namespace FoodFiestaApp.Controllers
             return Ok(singleFood);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult CreateFood([FromBody] FoodDto food)
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True")
+            {
+                return BadRequest("User is not authenticated.");
+            }
             if (food == null)
             {
                 return BadRequest("Food object is null");
@@ -71,12 +77,17 @@ namespace FoodFiestaApp.Controllers
             return Ok(food);
         }
 
-        [HttpPut("{foodId}")]
+        [HttpPut("{foodId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public IActionResult UpdateFood([FromBody] FoodDto updatedFood, int foodId)
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True")
+            {
+                return BadRequest("User is not authenticated.");
+            }
             if (!_foodRepository.FoodExists(foodId))
                 return NotFound();
 
@@ -97,11 +108,16 @@ namespace FoodFiestaApp.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{foodId}")]
+        [HttpDelete("{foodId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public IActionResult DeleteFood(int foodId)
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True")
+            {
+                return BadRequest("User is not authenticated.");
+            }
             if (!_foodRepository.FoodExists(foodId))
             {
                 return NotFound();

@@ -2,7 +2,9 @@
 using FoodFiestaApp.DTO;
 using FoodFiestaApp.Interfaces;
 using FoodFiestaApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FoodFiestaApp.Controllers
 {
@@ -18,10 +20,15 @@ namespace FoodFiestaApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         [ProducesResponseType(200, Type = typeof(IEnumerable<UserDTO>))]
         public IActionResult GetUsers()
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True")
+            {
+                return BadRequest("User is not authenticated.");
+            }
             var allCustomers = _customerRepository.GetUsers();
 
             if (!ModelState.IsValid)
@@ -29,11 +36,16 @@ namespace FoodFiestaApp.Controllers
             return Ok(allCustomers);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}"), Authorize]
         [ProducesResponseType(200, Type = typeof(IEnumerable<UserDTO>))]
         [ProducesResponseType(400)]
         public IActionResult GetUser(int Id)
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True")
+            {
+                return BadRequest("User is not authenticated.");
+            }
             if (_customerRepository.GetUser(Id) is null)
                 return NotFound();
 
@@ -46,12 +58,17 @@ namespace FoodFiestaApp.Controllers
         }
 
 
-        [HttpPut("{userId}")]
+        [HttpPut("{userId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public IActionResult UpdateUser([FromBody] User user, int userId)
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True")
+            {
+                return BadRequest("User is not authenticated.");
+            }
             if (user == null || userId != user.Id)
                 return BadRequest(ModelState);
 
@@ -75,11 +92,16 @@ namespace FoodFiestaApp.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{userId}")]
+        [HttpDelete("{userId}"), Authorize]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         public IActionResult DeleteUser(int userId)
         {
+            string userAuthenticationClaim = User.FindFirst(ClaimTypes.Authentication).Value;
+            if (userAuthenticationClaim != "True")
+            {
+                return BadRequest("User is not authenticated.");
+            }
             if (!_customerRepository.UserExists(userId))
             {
                 return NotFound();
